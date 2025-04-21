@@ -16,7 +16,6 @@ public class SistemaDeInventario : MonoBehaviour
     {
         inventario = new List<InventoryItem>();
         _itemDictionary = new Dictionary<InvetarioItemData, InventoryItem>();
-
         Instance = this;
     }   
 

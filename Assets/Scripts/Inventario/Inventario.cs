@@ -7,15 +7,9 @@ public class Inventario : MonoBehaviour
 {
     public GameObject itemSlotPrefab;
 
-
-    private void Awake()
+    private void Start()
     {
         SistemaDeInventario.Instance.onInventoryChangedCallback += OnUpdateInventory;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        //SistemaDeInventario.Instance.onInventoryChangedCallback += OnUpdateInventory;
     }
 
     public void OnUpdateInventory()

@@ -9,10 +9,6 @@ public class AbrirInventario : MonoBehaviour
     public GameObject inventario;
     public bool banderaaInventario;
 
-    private void Awake()
-    {
-        
-    }
     // Start is called before the first frame update
     void Start()
     {
