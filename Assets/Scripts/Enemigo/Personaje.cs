@@ -18,7 +18,7 @@ public class Personaje : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Arma"))
+        if(other.CompareTag("arma"))
         {
             Debug.Log("Dano");
         }

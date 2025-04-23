@@ -13,7 +13,7 @@ public class Enemigo1 : MonoBehaviour
     public GameObject target;
     public bool atacando;
 
-    private string attackAnimationName = "Attack";
+    private string attackAnimationName = "attack";
 
     // Start is called before the first frame update
     void Start()
@@ -24,15 +24,14 @@ public class Enemigo1 : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {     
         ComportamientoEnemigo();
-        DetectarFinalAtaque();
+       
     }
 
     public void ComportamientoEnemigo()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > 15)
+        if (Vector3.Distance(transform.position, target.transform.position) > 8)
         {
             ani.SetBool("run", false);
 
@@ -95,6 +94,12 @@ public class Enemigo1 : MonoBehaviour
         }
     }
 
+    public void FinalAni()
+    {
+        ani.SetBool("attack", false);
+        atacando = false;
+    }
+
     public void DetectarFinalAtaque()
     {
         // Verifica si la animación de ataque está activa
@@ -104,13 +109,19 @@ public class Enemigo1 : MonoBehaviour
         if (stateInfo.IsName(attackAnimationName))
         {
             // Verifica si ha llegado al final de la animación (normalizedTime >= 1)
-            if (stateInfo.normalizedTime >= 1f)
+            if (stateInfo.normalizedTime >= 1f && Vector3.Distance(transform.position, target.transform.position) > 1)
             {
                 // La animación de ataque ha terminado
                 ani.SetBool("attack", false);
                 atacando = false;
-                Debug.Log("El ataque ha terminado");
-                // Realiza las acciones necesarias aquí
+            }
+            else
+            {
+                ani.SetBool("walk", false);
+                ani.SetBool("run", false);
+
+                ani.SetBool("attack", true);
+                atacando = true;
             }
         }
     }

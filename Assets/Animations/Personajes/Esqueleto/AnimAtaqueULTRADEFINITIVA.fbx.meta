@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e73baab574f8f6429b93f100e127821
+guid: 68d8acc2d3eb4d34b8cbde50dfc3ae58
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -37,7 +37,7 @@ ModelImporter:
       takeName: CINEMA_4D_Principal
       internalID: -8376859586969802253
       firstFrame: 0
-      lastFrame: 48
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
