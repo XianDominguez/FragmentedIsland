@@ -26,7 +26,6 @@ public class Enemigo1 : MonoBehaviour
     void Update()
     {     
         ComportamientoEnemigo();
-       
     }
 
     public void ComportamientoEnemigo()
@@ -67,7 +66,7 @@ public class Enemigo1 : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.transform.position) > 1 && !atacando)
+            if (Vector3.Distance(transform.position, target.transform.position) > 1.3 && !atacando)
             {
                 var lookPOs = target.transform.position - transform.position;
                 lookPOs.y = 0;
@@ -98,31 +97,5 @@ public class Enemigo1 : MonoBehaviour
     {
         ani.SetBool("attack", false);
         atacando = false;
-    }
-
-    public void DetectarFinalAtaque()
-    {
-        // Verifica si la animación de ataque está activa
-        AnimatorStateInfo stateInfo = ani.GetCurrentAnimatorStateInfo(0); // 0 es la capa principal del Animator
-
-        // Si la animación actual es la animación de ataque
-        if (stateInfo.IsName(attackAnimationName))
-        {
-            // Verifica si ha llegado al final de la animación (normalizedTime >= 1)
-            if (stateInfo.normalizedTime >= 1f && Vector3.Distance(transform.position, target.transform.position) > 1)
-            {
-                // La animación de ataque ha terminado
-                ani.SetBool("attack", false);
-                atacando = false;
-            }
-            else
-            {
-                ani.SetBool("walk", false);
-                ani.SetBool("run", false);
-
-                ani.SetBool("attack", true);
-                atacando = true;
-            }
-        }
     }
 }
