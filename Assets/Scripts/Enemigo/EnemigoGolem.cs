@@ -82,7 +82,7 @@ public class EnemigoGolem : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.transform.position) > 1.7 && !atacando)
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.5 && !atacando)
             {
                 ani.SetBool("walk", true);
                 ani.SetBool("attack", false);
