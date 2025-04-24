@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemigo1 : MonoBehaviour
+public class EnemigoGolem : MonoBehaviour
 {
     public int rutina;
     public float cronometro;
@@ -35,8 +35,6 @@ public class Enemigo1 : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 8)
         {
-            ani.SetBool("run", false);
-
             cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
             {
@@ -86,8 +84,7 @@ public class Enemigo1 : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, target.transform.position) > 1.7 && !atacando)
             {
-                ani.SetBool("walk", false);
-                ani.SetBool("run", true);
+                ani.SetBool("walk", true);
                 ani.SetBool("attack", false);
 
                 agent.isStopped = false;
@@ -97,7 +94,6 @@ public class Enemigo1 : MonoBehaviour
             else 
             {
                 ani.SetBool("walk", false);
-                ani.SetBool("run", false);
 
                 ani.SetBool("attack", true);
 
