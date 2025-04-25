@@ -17,6 +17,14 @@ public class Enemigo1 : MonoBehaviour
     public NavMeshAgent agent;
     private Vector3 destinoAleatorio;
 
+    [Header("Vida")]
+    public int vidaActual;
+    int vidaMaxima = 20;
+
+    private void Awake()
+    {
+        vidaActual = vidaMaxima;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -113,5 +121,25 @@ public class Enemigo1 : MonoBehaviour
     {
         ani.SetBool("attack", false);
         atacando = false;
+    }
+
+    public void RecibirDano(int cantidad)
+    {
+        vidaActual -= cantidad;
+        print("recibe dano");
+        if (vidaActual <= 0)
+        {
+            MuerteAnim();
+        }
+    }
+
+    void MuerteAnim()
+    {
+        ani.SetBool("muerte", true );
+    }
+
+    public void MuerteDestroy()
+    {
+        Destroy(gameObject);
     }
 }

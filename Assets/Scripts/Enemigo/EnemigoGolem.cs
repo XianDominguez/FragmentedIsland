@@ -47,7 +47,14 @@ public class EnemigoGolem : MonoBehaviour
                 case 0:
                     {
                         ani.SetBool("walk", false);
-                        agent.isStopped = true;
+                        if (agent.isOnNavMesh)
+                        {
+                            agent.isStopped = true; // o agent.Stop() si usás una versión más vieja
+                        }
+                        else
+                        {
+                            Debug.LogWarning("El agente no está sobre el NavMesh.");
+                        }
                     }
                     break;
                 case 1:
