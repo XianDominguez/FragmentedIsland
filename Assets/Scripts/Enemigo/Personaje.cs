@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,14 +16,8 @@ public class Personaje : MonoBehaviour
 
     [Header("Stamina")]
     [Space]
-    public float staminaMax = 100f;
-    public float staminaActual;
-    public float regeneracion = 10f;
-    public float gastoPorCorrer = 20f;
+    public FirstPersonController firstPersonController;
 
-    public Image barraStamina;
-
-    private bool corriendo;
     [Header("Ataque")]
     [Space]
     public float distanciaAtaque = 5000f;
@@ -39,38 +34,72 @@ public class Personaje : MonoBehaviour
     bool listoParaAtacar = true;
     int cuentaAtaque;
 
+    public Animator animator;
+    private bool alternarAtaque = false;
+
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         Vida = 1;
         barraVida.fillAmount = 1;
-        staminaActual = staminaMax;
-        ActualizarBarra();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) // Botón izquierdo del mouse
+        // Movimiento
+        if (!animator.GetBool("isAttacking")) // SOLO si NO está atacando
         {
-            Ataque();
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    animator.SetBool("Correr", true);
+                    animator.SetBool("Andar", false);
+                }
+                else
+                {
+                    animator.SetBool("Andar", true);
+                    animator.SetBool("Correr", false);
+                }
+            }
+            else
+            {
+                animator.SetBool("Andar", false);
+                animator.SetBool("Correr", false);
+            }
         }
 
-        corriendo = Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Vertical") > 0;
-
-        if (corriendo && staminaActual > 0)
+        // Ataque
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            staminaActual -= gastoPorCorrer * Time.deltaTime;
-            if (staminaActual < 0) staminaActual = 0;
-        }
-        else if (staminaActual < staminaMax)
-        {
-            staminaActual += regeneracion * Time.deltaTime;
-            if (staminaActual > staminaMax) staminaActual = staminaMax;
-        }
+            animator.SetBool("isAttacking", true); // empieza ataque
+            animator.SetBool("bandera", false);
 
-        ActualizarBarra();
+            if (alternarAtaque)
+            {
+                animator.SetTrigger("Ataque1");
+            }
+            else
+            {
+                animator.SetTrigger("Ataque2");
+            }
+
+            alternarAtaque = !alternarAtaque;
+ 
+        }
+    }
+
+    public void TerminarAtaque()
+    {
+        animator.SetBool("isAttacking", false); 
+    }
+
+    public void CambiarBandera()
+    {
+        animator.SetBool("bandera", true);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -80,14 +109,6 @@ public class Personaje : MonoBehaviour
             Debug.Log("Dano");
             Vida = Vida - 0.1f;
             barraVida.fillAmount = Vida;
-        }
-    }
-
-    void ActualizarBarra()
-    {
-        if (barraStamina != null)
-        {
-            barraStamina.fillAmount = staminaActual / staminaMax;
         }
     }
 
