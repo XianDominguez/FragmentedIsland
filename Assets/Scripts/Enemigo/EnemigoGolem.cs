@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemigoGolem : MonoBehaviour
 {
@@ -17,9 +18,18 @@ public class EnemigoGolem : MonoBehaviour
     public NavMeshAgent agent;
     private Vector3 destinoAleatorio;
 
+    [Header("Vida")]
+    public int vidaActual;
+    int vidaMaxima = 100;
+    public Slider barraVida;
+
+
+    public bool banderaMuerto = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        vidaActual = vidaMaxima;
         ani = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player");
@@ -27,8 +37,11 @@ public class EnemigoGolem : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {     
-        ComportamientoEnemigo();
+    {
+        if (banderaMuerto == false)
+        {
+            ComportamientoEnemigo();
+        }
     }
 
     public void ComportamientoEnemigo()
@@ -89,25 +102,36 @@ public class EnemigoGolem : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.transform.position) > 2.5 && !atacando)
+            var lookPos = target.transform.position - transform.position;
+            lookPos.y = 0;
+            var rotation = Quaternion.LookRotation(lookPos);
+
+
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
             {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
+
                 ani.SetBool("walk", true);
+
                 ani.SetBool("attack", false);
 
                 agent.isStopped = false;
                 agent.speed = 3;
                 agent.SetDestination(target.transform.position);
             }
-            else 
+            else
             {
                 ani.SetBool("walk", false);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("attack", true);
 
                 agent.isStopped = true;
                 atacando = true;
             }
-          
+
+
+
 
         }
     }
@@ -116,5 +140,30 @@ public class EnemigoGolem : MonoBehaviour
     {
         ani.SetBool("attack", false);
         atacando = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Espada"))
+        {
+            Debug.Log("Dano Golem");
+            vidaActual -= 15;
+            barraVida.value = vidaActual;
+            if (vidaActual <= 0)
+            {
+                banderaMuerto = true;
+                MuerteAnim();
+            }
+        }
+    }
+
+    void MuerteAnim()
+    {
+        ani.Play("MuerteGolem");
+    }
+
+    public void MuerteDestroy()
+    {
+        Destroy(gameObject);
     }
 }

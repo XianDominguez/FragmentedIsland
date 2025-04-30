@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemigo1 : MonoBehaviour
 {
@@ -19,7 +20,11 @@ public class Enemigo1 : MonoBehaviour
 
     [Header("Vida")]
     public int vidaActual;
-    int vidaMaxima = 20;
+    int vidaMaxima = 45;
+    public Slider barraVida;
+
+
+    public bool banderaMuerto = false;
 
     private void Awake()
     {
@@ -35,8 +40,12 @@ public class Enemigo1 : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {     
-        ComportamientoEnemigo();
+    {
+        if (banderaMuerto == false) 
+        { 
+          ComportamientoEnemigo();
+        }
+
     }
 
     public void ComportamientoEnemigo()
@@ -92,10 +101,18 @@ public class Enemigo1 : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.transform.position) > 1.7 && !atacando)
+            var lookPos = target.transform.position - transform.position;
+            lookPos.y = 0;
+            var rotation = Quaternion.LookRotation(lookPos);
+
+
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
             {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
+
                 ani.SetBool("walk", false);
                 ani.SetBool("run", true);
+
                 ani.SetBool("attack", false);
 
                 agent.isStopped = false;
@@ -106,6 +123,7 @@ public class Enemigo1 : MonoBehaviour
             {
                 ani.SetBool("walk", false);
                 ani.SetBool("run", false);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("attack", true);
 
@@ -123,19 +141,24 @@ public class Enemigo1 : MonoBehaviour
         atacando = false;
     }
 
-    public void RecibirDano(int cantidad)
+    private void OnTriggerEnter(Collider other)
     {
-        vidaActual -= cantidad;
-        print("recibe dano");
-        if (vidaActual <= 0)
+        if (other.CompareTag("Espada"))
         {
-            MuerteAnim();
+            Debug.Log("Dano Esqueleto");
+            vidaActual -= 8;
+            barraVida.value = vidaActual;
+            if (vidaActual <= 0)
+            {
+                banderaMuerto = true;
+                MuerteAnim();
+            }
         }
     }
 
     void MuerteAnim()
     {
-        ani.SetBool("muerte", true );
+        ani.Play("Muelte");
     }
 
     public void MuerteDestroy()
