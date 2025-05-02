@@ -25,6 +25,7 @@ public class Enemigo1 : MonoBehaviour
 
 
     public bool banderaMuerto = false;
+    private bool puedeRecibirDano = true;
 
     private void Awake()
     {
@@ -143,11 +144,13 @@ public class Enemigo1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Espada"))
+        if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             Debug.Log("Dano Esqueleto");
             vidaActual -= 8;
             barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+            StartCoroutine(ResetearInvulnerabilidad());
             if (vidaActual <= 0)
             {
                 banderaMuerto = true;
@@ -155,7 +158,11 @@ public class Enemigo1 : MonoBehaviour
             }
         }
     }
-
+    IEnumerator ResetearInvulnerabilidad()
+    {
+        yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
+        puedeRecibirDano = true;
+    }
     void MuerteAnim()
     {
         ani.Play("Muelte");

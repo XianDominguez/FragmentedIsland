@@ -25,6 +25,7 @@ public class EnemigoGolem : MonoBehaviour
 
 
     public bool banderaMuerto = false;
+    private bool puedeRecibirDano = true;
 
     // Start is called before the first frame update
     void Start()
@@ -107,7 +108,7 @@ public class EnemigoGolem : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
 
 
-            if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.8 && !atacando)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
@@ -144,11 +145,13 @@ public class EnemigoGolem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Espada"))
+        if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             Debug.Log("Dano Golem");
             vidaActual -= 15;
             barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+            StartCoroutine(ResetearInvulnerabilidad());
             if (vidaActual <= 0)
             {
                 banderaMuerto = true;
@@ -156,7 +159,11 @@ public class EnemigoGolem : MonoBehaviour
             }
         }
     }
-
+    IEnumerator ResetearInvulnerabilidad()
+    {
+        yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
+        puedeRecibirDano = true;
+    }
     void MuerteAnim()
     {
         ani.Play("MuerteGolem");
