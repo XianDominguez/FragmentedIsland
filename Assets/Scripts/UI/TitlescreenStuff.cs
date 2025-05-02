@@ -5,22 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TitlescreenStuff : MonoBehaviour
 {
-    public Animator animator;
-    public string sceneToLoad;
-
-    private bool hasTransitioned = false;
-
-    void Update()
+    public void LoadNextScene()
     {
-        if (!hasTransitioned && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !animator.IsInTransition(0))
-        {
-            hasTransitioned = true;
-            LoadNextScene();
-        }
-    }
-
-    void LoadNextScene()
-    {
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(0);
     }
 }
