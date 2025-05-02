@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitlescreenStuff : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Animator animator;
+    public string sceneToLoad;
 
-    // Update is called once per frame
+    private bool hasTransitioned = false;
+
     void Update()
     {
-        
+        if (!hasTransitioned && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !animator.IsInTransition(0))
+        {
+            hasTransitioned = true;
+            LoadNextScene();
+        }
+    }
+
+    void LoadNextScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
