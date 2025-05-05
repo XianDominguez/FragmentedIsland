@@ -11,8 +11,6 @@ public class AnimalesPasivos : MonoBehaviour
     public Quaternion angulo;
     public float grado;
 
-    public GameObject target;
-
     public NavMeshAgent agent;
     private Vector3 destinoAleatorio;
 
@@ -21,7 +19,6 @@ public class AnimalesPasivos : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        target = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -32,9 +29,7 @@ public class AnimalesPasivos : MonoBehaviour
 
     public void ComportamientoEnemigo()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > 8)
-        {
-            cronometro += 1 * Time.deltaTime;
+        cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
             {
                 rutina = Random.Range(0, 2);
@@ -77,7 +72,7 @@ public class AnimalesPasivos : MonoBehaviour
                     }
                     break;
             }
-        }
+        
         
     }
 }
