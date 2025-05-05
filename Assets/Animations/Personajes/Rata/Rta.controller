@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 801a05b74137191408f488b6dbc6d2a8, type: 2}
+  m_Motion: {fileID: 7400000, guid: 65e324f769805254da58a053ebf39d6d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -83,7 +83,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Raton
+  m_Name: Rta
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: walk
@@ -126,7 +126,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 37efcd253aaa4b04c963cec131a31d95, type: 2}
+  m_Motion: {fileID: 7400000, guid: c63abe0964bd926429307655468a019a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

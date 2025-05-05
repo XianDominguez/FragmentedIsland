@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RatonIdle
+  m_Name: RataIdle
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -1486,7 +1486,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.00019409873, y: 0.377108, z: 0.0003610778}
+        value: {x: -0.00019409873, y: 0.334396, z: 0.0003610778}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -1495,7 +1495,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.2
-        value: {x: -0.00019409873, y: 0.377108, z: 0.0003610778}
+        value: {x: -0.00019409873, y: 0.334396, z: 0.0003610778}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
