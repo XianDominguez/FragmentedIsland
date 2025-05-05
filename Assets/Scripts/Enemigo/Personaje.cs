@@ -32,12 +32,14 @@ public class Personaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Vida <= 0)
         {
             Time.timeScale = 0f; // Pausa el juego
             firstPersonController.enabled = false;
             //pantallaGameOver.SetActive(true);
         }
+        */
     }
 
     private void OnTriggerEnter(Collider other)
