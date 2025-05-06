@@ -8,14 +8,20 @@ public class ToolBar : MonoBehaviour
     public List<Sprite> toolBarSprites = new List<Sprite>();
     public Image toolBar;
 
+    public GameObject espadaMano;
+    public GameObject palaMano;
+
     private void Start()
     {
         toolBar.sprite = toolBarSprites[0];
+        espadaMano.SetActive(true);
+        palaMano.SetActive(false);
     }
 
     void QuitarMano()
     {
-      
+        espadaMano.SetActive(false);
+        palaMano.SetActive(false);
     }
 
     // Update is called once per frame
@@ -25,12 +31,14 @@ public class ToolBar : MonoBehaviour
         {
             toolBar.sprite = toolBarSprites[0];
             QuitarMano();
+            espadaMano.SetActive(true);
 
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             toolBar.sprite = toolBarSprites[1];
             QuitarMano();
+            palaMano.SetActive(true);
 
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))

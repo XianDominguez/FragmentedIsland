@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
 
@@ -22,7 +23,9 @@ public class Personaje : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pantallaGameOver.SetActive(false);
+        Time.timeScale = 1f; // Despausa el juego
+        pantallaGameOver.SetActive(false);
+        firstPersonController.enabled = true;
         cam = Camera.main;
         Vida = 1;
         barraVida.fillAmount = 1;
@@ -31,14 +34,20 @@ public class Personaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+       
         if (Vida <= 0)
         {
             Time.timeScale = 0f; // Pausa el juego
             firstPersonController.enabled = false;
-            //pantallaGameOver.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            pantallaGameOver.SetActive(true);
         }
-        */
+        
+    }
+
+    public void Reaparecer()
+    {
+        SceneManager.LoadScene("MapaPrincipal");
     }
 
     private void OnTriggerEnter(Collider other)

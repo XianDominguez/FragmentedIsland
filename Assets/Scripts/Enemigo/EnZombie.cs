@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemigoEspiritu : MonoBehaviour
+public class EnZombie : MonoBehaviour
 {
     public int rutina;
     public float cronometro;
@@ -20,20 +20,17 @@ public class EnemigoEspiritu : MonoBehaviour
 
     [Header("Vida")]
     public int vidaActual;
-    int vidaMaxima = 45;
+    int vidaMaxima = 40;
     public Slider barraVida;
 
 
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
-    private void Awake()
-    {
-        vidaActual = vidaMaxima;
-    }
     // Start is called before the first frame update
     void Start()
     {
+        vidaActual = vidaMaxima;
         ani = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player");
@@ -46,15 +43,12 @@ public class EnemigoEspiritu : MonoBehaviour
         {
             ComportamientoEnemigo();
         }
-
     }
 
     public void ComportamientoEnemigo()
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 8)
         {
-            ani.SetBool("run", false);
-
             cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
             {
@@ -67,7 +61,14 @@ public class EnemigoEspiritu : MonoBehaviour
                 case 0:
                     {
                         ani.SetBool("walk", false);
-                        agent.isStopped = true;
+                        if (agent.isOnNavMesh)
+                        {
+                            agent.isStopped = true; // o agent.Stop() si usás una versión más vieja
+                        }
+                        else
+                        {
+                            Debug.LogWarning("El agente no está sobre el NavMesh.");
+                        }
                     }
                     break;
                 case 1:
@@ -107,12 +108,11 @@ public class EnemigoEspiritu : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
 
 
-            if (Vector3.Distance(transform.position, target.transform.position) > 2 && !atacando)
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.8 && !atacando)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
-                ani.SetBool("walk", false);
-                ani.SetBool("run", true);
+                ani.SetBool("walk", true);
 
                 ani.SetBool("attack", false);
 
@@ -123,7 +123,6 @@ public class EnemigoEspiritu : MonoBehaviour
             else
             {
                 ani.SetBool("walk", false);
-                ani.SetBool("run", false);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("attack", true);
@@ -131,6 +130,8 @@ public class EnemigoEspiritu : MonoBehaviour
                 agent.isStopped = true;
                 atacando = true;
             }
+
+
 
 
         }
@@ -146,8 +147,8 @@ public class EnemigoEspiritu : MonoBehaviour
     {
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
-            Debug.Log("Dano Espiritu");
-            vidaActual -= 5;
+            Debug.Log("Dano Zombie");
+            vidaActual -= 10;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
             StartCoroutine(ResetearInvulnerabilidad());
@@ -165,7 +166,7 @@ public class EnemigoEspiritu : MonoBehaviour
     }
     void MuerteAnim()
     {
-        ani.Play("Muelte");
+        ani.Play("MuerteZombie");
     }
 
     public void MuerteDestroy()
