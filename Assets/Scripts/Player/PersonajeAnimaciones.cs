@@ -13,6 +13,8 @@ public class PersonajeAnimaciones : MonoBehaviour
     public float cooldownAtaque = 1.0f;
     private float lastAttackTime = -Mathf.Infinity;
 
+    public bool animacionEjecutandose;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class PersonajeAnimaciones : MonoBehaviour
         // Movimiento
         if (!animator.GetBool("isAttacking")) // SOLO si NO está atacando
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
@@ -65,12 +67,41 @@ public class PersonajeAnimaciones : MonoBehaviour
 
             lastAttackTime = Time.time;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time >= lastAttackTime + cooldownAtaque)
+        {
+            animator.SetBool("isSecondary", true);
+            animator.SetTrigger("AccionSecundaria");
+            animator.SetBool("bandera", false);
+            lastAttackTime = Time.time;
+        }
+
+        
     }
 
+    public void EstadoAnimaciones()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("Ataque 1") || stateInfo.IsName("Ataque 2") || stateInfo.IsName("PalaExcavar"))
+        {
+            Debug.Log("Se ejecuta la animacion");
+            animacionEjecutandose = true;
+        }
+        else
+        {
+            Debug.Log("NO Se ejecuta la animacion");
+            animacionEjecutandose = false;
+        }
+    }
 
     public void TerminarAtaque()
     {
         animator.SetBool("isAttacking", false);
+    }
+
+    public void TerminarAccSec()
+    {
+        animator.SetBool("isSecondary", false);
     }
 
     public void CambiarBandera()
