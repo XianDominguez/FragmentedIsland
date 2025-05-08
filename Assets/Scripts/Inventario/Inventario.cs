@@ -6,7 +6,7 @@ public class Inventario : MonoBehaviour
 {
     public GameObject itemSlotPrefab;
 
-    private void Start()
+    private void Awake()
     {
         SistemaDeInventario.Instance.onInventoryChangedCallback += OnUpdateInventory;
     }

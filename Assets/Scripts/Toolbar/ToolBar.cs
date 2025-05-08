@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ToolBar : MonoBehaviour
 {
-    public PersonajeAnimaciones personajeAnimaciones;
 
     public List<Sprite> toolBarSprites = new List<Sprite>();
     public Image toolBar;
@@ -35,8 +34,11 @@ public class ToolBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
+
             personajeAnimaciones.EstadoAnimaciones();
             if(personajeAnimaciones.animacionEjecutandose == false)
             {
@@ -47,6 +49,8 @@ public class ToolBar : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
+
             personajeAnimaciones.EstadoAnimaciones();
             if (personajeAnimaciones.animacionEjecutandose == false)
             {
@@ -57,6 +61,8 @@ public class ToolBar : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
+
             personajeAnimaciones.EstadoAnimaciones();
 
             if (personajeAnimaciones.animacionEjecutandose == false)
@@ -68,6 +74,8 @@ public class ToolBar : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
+            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
+
             personajeAnimaciones.EstadoAnimaciones();
 
             if (personajeAnimaciones.animacionEjecutandose == false)

@@ -84,12 +84,10 @@ public class PersonajeAnimaciones : MonoBehaviour
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName("Ataque 1") || stateInfo.IsName("Ataque 2") || stateInfo.IsName("PalaExcavar"))
         {
-            Debug.Log("Se ejecuta la animacion");
             animacionEjecutandose = true;
         }
         else
         {
-            Debug.Log("NO Se ejecuta la animacion");
             animacionEjecutandose = false;
         }
     }

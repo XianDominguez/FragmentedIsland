@@ -17,7 +17,8 @@ public class Personaje : MonoBehaviour
     public FirstPersonController firstPersonController;
 
     public GameObject pantallaGameOver;
-
+    public GameObject objetoInteraccionE;
+    RaycastHit raycast;
 
 
     // Start is called before the first frame update
@@ -34,7 +35,6 @@ public class Personaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         if (Vida <= 0)
         {
             Time.timeScale = 0f; // Pausa el juego
@@ -42,8 +42,37 @@ public class Personaje : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             pantallaGameOver.SetActive(true);
         }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            Debug.DrawRay(cam.transform.position, cam.transform.forward * 3, Color.green,3f);
+            RaycastHit raycast;
+            if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
+            {
+                if(raycast.collider.gameObject.CompareTag("Material"))
+                {
+                    Debug.Log("Toca material");
+                    ItemObject itemObject = raycast.collider.gameObject.GetComponent<ItemObject>();
+                    itemObject.CogerObjeto();
+                    objetoInteraccionE.SetActive(false);
+                }
+            }
+
+        }
         
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
+        {
+            if (raycast.collider.gameObject.CompareTag("Material"))
+            {
+                objetoInteraccionE.SetActive(true);
+            }
+        }
+        else
+        {
+            objetoInteraccionE.SetActive(false);
+        }
     }
+ 
 
     public void Reaparecer()
     {

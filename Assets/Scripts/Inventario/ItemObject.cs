@@ -12,11 +12,8 @@ public class ItemObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void CogerMultiplesObjetos()
     {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            CogerObjeto();
-        }
+        SistemaDeInventario.Instance.Add(ItemData);
     }
 }

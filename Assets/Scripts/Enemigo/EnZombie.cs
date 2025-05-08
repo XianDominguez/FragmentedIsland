@@ -108,7 +108,7 @@ public class EnZombie : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
 
 
-            if (Vector3.Distance(transform.position, target.transform.position) > 2.8 && !atacando)
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 

@@ -10,6 +10,11 @@ public class AbrirInventario : MonoBehaviour
     public bool banderaaInventario;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        inventario.SetActive(true);
+    }
+
     void Start()
     {
         inventario.SetActive(false);
@@ -19,7 +24,7 @@ public class AbrirInventario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (banderaaInventario == false)
             {
