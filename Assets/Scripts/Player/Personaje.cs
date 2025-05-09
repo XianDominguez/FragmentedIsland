@@ -20,6 +20,9 @@ public class Personaje : MonoBehaviour
     public GameObject objetoInteraccionE;
     RaycastHit raycast;
 
+    public SumarMaterial sumarMaterial;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,15 +48,19 @@ public class Personaje : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.forward * 3, Color.green,3f);
             RaycastHit raycast;
             if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
             {
                 if(raycast.collider.gameObject.CompareTag("Material"))
                 {
-                    Debug.Log("Toca material");
                     ItemObject itemObject = raycast.collider.gameObject.GetComponent<ItemObject>();
+
                     itemObject.CogerObjeto();
+
+                    Collider other = raycast.collider;
+
+                    sumarMaterial.AnimacionSumar(other);
+
                     objetoInteraccionE.SetActive(false);
                 }
             }
@@ -73,7 +80,6 @@ public class Personaje : MonoBehaviour
         }
     }
  
-
     public void Reaparecer()
     {
         SceneManager.LoadScene("MapaPrincipal");
