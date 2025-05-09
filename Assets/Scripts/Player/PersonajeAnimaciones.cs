@@ -15,6 +15,8 @@ public class PersonajeAnimaciones : MonoBehaviour
 
     public bool animacionEjecutandose;
 
+    public AudioSource audioSourceSonidoEspada;
+
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +92,12 @@ public class PersonajeAnimaciones : MonoBehaviour
         {
             animacionEjecutandose = false;
         }
+    }
+
+    public void PlayAudioEspada()
+    {
+        audioSourceSonidoEspada.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoEspada.Play();
     }
 
     public void TerminarAtaque()

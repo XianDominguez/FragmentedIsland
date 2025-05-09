@@ -27,6 +27,8 @@ public class EnZombie : MonoBehaviour
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
+    public AudioSource audioSourceGolpeZombie;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -148,6 +150,7 @@ public class EnZombie : MonoBehaviour
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             Debug.Log("Dano Zombie");
+            PlayAudioGolpeZombie();
             vidaActual -= 10;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
@@ -164,6 +167,13 @@ public class EnZombie : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
         puedeRecibirDano = true;
     }
+
+    public void PlayAudioGolpeZombie()
+    {
+        audioSourceGolpeZombie.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceGolpeZombie.Play();
+    }
+
     void MuerteAnim()
     {
         ani.Play("MuerteZombie");
