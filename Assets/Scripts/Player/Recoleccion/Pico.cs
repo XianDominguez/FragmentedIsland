@@ -10,6 +10,7 @@ public class Pico : MonoBehaviour
 
     public SumarMaterial sumarMaterial;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,27 @@ public class Pico : MonoBehaviour
             }
 
         }
+
+        if (other.gameObject.CompareTag("MenaMetal"))
+        {
+            if (piedraRecogida < 2)
+            {
+                piedraRecogida++;
+            }
+            else
+            {
+                ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
+                itemObject.CogerObjeto();
+
+                Transform padre = other.gameObject.transform.parent;
+                Transform MenaDestr = padre.Find("MenaDestr");
+                MenaDestr.gameObject.SetActive(true);
+
+                sumarMaterial.AnimacionSumar(other);
+            }
+
+        }
     }
- 
+
+
 }

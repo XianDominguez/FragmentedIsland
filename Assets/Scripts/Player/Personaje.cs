@@ -23,7 +23,6 @@ public class Personaje : MonoBehaviour
     public SumarMaterial sumarMaterial;
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +77,7 @@ public class Personaje : MonoBehaviour
         {
             objetoInteraccionE.SetActive(false);
         }
+
     }
  
     public void Reaparecer()
@@ -94,6 +94,5 @@ public class Personaje : MonoBehaviour
             barraVida.fillAmount = Vida;
         } 
     }
-
 
 }
