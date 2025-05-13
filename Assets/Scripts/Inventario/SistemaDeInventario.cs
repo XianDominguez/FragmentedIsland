@@ -49,4 +49,16 @@ public class SistemaDeInventario : MonoBehaviour
             }
         }
     }
+
+    public bool TieneItemsNecesarios(Dictionary<InvetarioItemData, int> requeridos)
+    {
+        foreach (var par in requeridos)
+        {
+            if (!_itemDictionary.TryGetValue(par.Key, out InventoryItem item) || item.tamanoStack < par.Value)
+            {
+                return false; // No tiene el item o no tiene suficiente cantidad
+            }
+        }
+        return true;
+    }
 }
