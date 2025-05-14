@@ -39,26 +39,36 @@ public class SistemaDeInventario : MonoBehaviour
 
     public void Remove(InvetarioItemData itemData)
     {
-        if(_itemDictionary.TryGetValue(itemData, out InventoryItem value))
+        if (_itemDictionary.TryGetValue(itemData, out InventoryItem value))
         {
             value.RemoveStack();
-            if(value.tamanoStack == 0)
+
+            if (value.tamanoStack == 0)
             {
                 inventario.Remove(value);
                 _itemDictionary.Remove(itemData);
             }
+
+            onInventoryChangedCallback?.Invoke();
         }
     }
 
-    public bool TieneItemsNecesarios(Dictionary<InvetarioItemData, int> requeridos)
+    public void RemoveCantidad(InvetarioItemData itemData, int cantidad)
     {
-        foreach (var par in requeridos)
+        if (_itemDictionary.TryGetValue(itemData, out InventoryItem item))
         {
-            if (!_itemDictionary.TryGetValue(par.Key, out InventoryItem item) || item.tamanoStack < par.Value)
+            // Evita que cantidad negativa rompa el sistema
+            int cantidadARemover = Mathf.Min(cantidad, item.tamanoStack);
+            item.tamanoStack -= cantidadARemover;
+
+            if (item.tamanoStack <= 0)
             {
-                return false; // No tiene el item o no tiene suficiente cantidad
+                inventario.Remove(item);
+                _itemDictionary.Remove(itemData);
             }
+
+            onInventoryChangedCallback?.Invoke();
         }
-        return true;
     }
+
 }
