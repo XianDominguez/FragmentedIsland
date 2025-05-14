@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbrirInventario : MonoBehaviour
 {
@@ -11,11 +12,24 @@ public class AbrirInventario : MonoBehaviour
     public bool banderaaInventario;
     public bool banderaCrafteo;
 
+    public Crafteo craftingSystem;
+    public RecetasCrafteo recetaMadera;
+    public RecetasCrafteo recetaHacha;
+    public RecetasCrafteo recetaPico;
+
+    public SistemaDeInventario sistemaDeInventario;
+
+
+    public Button craftearPico;
+    public Button craftearHacha;
+    public Button craftearMadera;
+
     // Start is called before the first frame update
     private void Awake()
     {
         inventario.SetActive(true);
         UiCrafteo.SetActive(true);
+
     }
 
     void Start()
@@ -24,6 +38,10 @@ public class AbrirInventario : MonoBehaviour
         UiCrafteo.SetActive(false);
         banderaaInventario = false;
         banderaCrafteo = false;
+
+        craftearPico.interactable = false;
+        craftearHacha.interactable = false;
+        craftearMadera.interactable = false;
     }
 
     // Update is called once per frame
@@ -58,8 +76,10 @@ public class AbrirInventario : MonoBehaviour
                 UiCrafteo.SetActive(true);
 
                 Crafteo crafteo = UiCrafteo.GetComponent<Crafteo>();
-
-                crafteo.ComprobarPosibilidades();
+                IntentarCraftear();
+                IntentarCraftear2();
+                IntentarCraftear3();
+               
 
                 banderaCrafteo = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -76,6 +96,51 @@ public class AbrirInventario : MonoBehaviour
                 controlCamara.enabled = true;
                 controlMovimiento.enabled = true;
             }
+        }
+    }
+
+    public void IntentarCraftear()
+    {
+        bool exito = craftingSystem.ComprobarPosibilidades(recetaMadera, sistemaDeInventario.inventario);
+
+        if (exito)
+        {
+            Debug.Log("Puedes craftear tablones");
+            craftearMadera.interactable = true;
+        } 
+        else
+        {
+            craftearMadera.interactable = false;
+        }
+    }
+
+    public void IntentarCraftear2()
+    {
+        bool exito = craftingSystem.ComprobarPosibilidades(recetaPico, sistemaDeInventario.inventario);
+
+        if (exito)
+        {
+            Debug.Log("Puedes craftear pico");
+            craftearPico.interactable = true;
+        }   
+        else
+        {
+            craftearPico.interactable = false;
+        }
+    }
+
+    public void IntentarCraftear3()
+    {
+        bool exito = craftingSystem.ComprobarPosibilidades(recetaHacha, sistemaDeInventario.inventario);
+
+        if (exito)
+        {
+            Debug.Log("Puedes craftear hacha");
+            craftearHacha.interactable = true;
+        }
+        else
+        {
+            craftearHacha.interactable = false;
         }
     }
 }

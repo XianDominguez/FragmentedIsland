@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: inventoryItem_metal
   nombreItem: Metal
-  iconoItem: {fileID: 21300000, guid: be5b2b84c6e56324eaf12c8b137d9cf2, type: 3}
+  iconoItem: {fileID: 21300000, guid: 415111ddbff28f44e9feb72de2f08b50, type: 3}
   itemPrefab: {fileID: 0}
