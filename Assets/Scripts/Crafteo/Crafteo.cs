@@ -7,6 +7,16 @@ using static UnityEditor.Progress;
 
 public class Crafteo : MonoBehaviour
 {
+    public AbrirInventario abrirInventario;
+
+   public bool hachaCrafteada;
+  public  bool picoCrafteado;
+
+    private void Start()
+    {
+        hachaCrafteada = false;
+        picoCrafteado = false;
+    }
 
     public bool ComprobarPosibilidades(RecetasCrafteo receta, List<InventoryItem> inventoryItems)
     {
@@ -37,39 +47,70 @@ public class Crafteo : MonoBehaviour
         
         // 3. Agregar el ítem resultante
         SistemaDeInventario.Instance.Add(receta.resultItem);
+
+        abrirInventario.IntentarCraftear();
+        abrirInventario.IntentarCraftear2();
+        abrirInventario.IntentarCraftear3();
         
 
     }
 
     public void CraftearHacha(RecetasCrafteo receta)
     {
-        // 2. Restar los ítems del inventario
-        foreach (var requerido in receta.requiredItems)
+        if(hachaCrafteada == false)
         {
-            for (int i = 0; i < requerido.requiredQuantity; i++)
+            // 2. Restar los ítems del inventario
+            foreach (var requerido in receta.requiredItems)
             {
-                SistemaDeInventario.Instance.RemoveCantidad(requerido.item, 1);
+                for (int i = 0; i < requerido.requiredQuantity; i++)
+                {
+                    SistemaDeInventario.Instance.RemoveCantidad(requerido.item, 1);
+                }
+            }
+
+            // 3. Agregar el ítem resultante
+            SistemaDeInventario.Instance.Add(receta.resultItem);
+            hachaCrafteada = true;
+
+            abrirInventario.IntentarCraftear();
+            abrirInventario.IntentarCraftear3();
+
+
+            if (picoCrafteado == false)
+            {
+                abrirInventario.IntentarCraftear2();
+
             }
         }
-
-        // 3. Agregar el ítem resultante
-        SistemaDeInventario.Instance.Add(receta.resultItem);
-
     }
 
     public void CraftearPico(RecetasCrafteo receta)
     {
-        // 2. Restar los ítems del inventario
-        foreach (var requerido in receta.requiredItems)
+        if(picoCrafteado == false)
         {
-            for (int i = 0; i < requerido.requiredQuantity; i++)
+            // 2. Restar los ítems del inventario
+            foreach (var requerido in receta.requiredItems)
             {
-                SistemaDeInventario.Instance.RemoveCantidad(requerido.item, 1);
+                for (int i = 0; i < requerido.requiredQuantity; i++)
+                {
+                    SistemaDeInventario.Instance.RemoveCantidad(requerido.item, 1);
+                }
             }
+
+            // 3. Agregar el ítem resultante
+            SistemaDeInventario.Instance.Add(receta.resultItem);
+            picoCrafteado = true;
+
+            abrirInventario.IntentarCraftear();
+            abrirInventario.IntentarCraftear2();
+
+           
+
+            if (hachaCrafteada == false)
+            {
+                abrirInventario.IntentarCraftear3();
+            }
+
         }
-
-        // 3. Agregar el ítem resultante
-        SistemaDeInventario.Instance.Add(receta.resultItem);
-
     }
 }
