@@ -7,6 +7,7 @@ public class AbrirInventario : MonoBehaviour
 {
     public MonoBehaviour controlCamara;
     public MonoBehaviour controlMovimiento;
+    public MonoBehaviour personajeAnimaciones;
     public GameObject inventario;
     public GameObject UiCrafteo;
     public bool banderaaInventario;
@@ -49,6 +50,8 @@ public class AbrirInventario : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
             if (banderaaInventario == false)
             {
                 inventario.SetActive(true);
@@ -57,6 +60,7 @@ public class AbrirInventario : MonoBehaviour
                 Cursor.visible = true;
                 controlCamara.enabled = false;
                 controlMovimiento.enabled = false;
+                personajeAnimaciones.enabled = false;
             }
             else
             {
@@ -65,12 +69,15 @@ public class AbrirInventario : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 controlCamara.enabled = true;
+                personajeAnimaciones.enabled = true;
                 controlMovimiento.enabled = true;
             }
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
+            personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
             if (banderaCrafteo == false)
             {
                 UiCrafteo.SetActive(true);
@@ -86,6 +93,8 @@ public class AbrirInventario : MonoBehaviour
                 Cursor.visible = true;
                 controlCamara.enabled = false;
                 controlMovimiento.enabled = false;
+                personajeAnimaciones.enabled = false;
+
             }
             else
             {
@@ -95,6 +104,8 @@ public class AbrirInventario : MonoBehaviour
                 Cursor.visible = false;
                 controlCamara.enabled = true;
                 controlMovimiento.enabled = true;
+                personajeAnimaciones.enabled = true;
+
             }
         }
     }
@@ -120,8 +131,16 @@ public class AbrirInventario : MonoBehaviour
 
         if (exito)
         {
-            Debug.Log("Puedes craftear pico");
-            craftearPico.interactable = true;
+            if(craftingSystem.picoCrafteado == true)
+            {
+                craftearPico.interactable = false;
+            }
+            else
+            {
+                Debug.Log("Puedes craftear pico");
+                craftearPico.interactable = true;
+            }
+
         }   
         else
         {
@@ -135,12 +154,22 @@ public class AbrirInventario : MonoBehaviour
 
         if (exito)
         {
-            Debug.Log("Puedes craftear hacha");
-            craftearHacha.interactable = true;
+            if(craftingSystem.hachaCrafteada == true)
+            {
+                craftearHacha.interactable = false;
+                Debug.Log("Craft hacha no interact");
+            }
+            else
+            {
+                Debug.Log("Puedes craftear hacha");
+                craftearHacha.interactable = true;
+            }
+         
         }
         else
         {
             craftearHacha.interactable = false;
+            Debug.Log("Craft hacha no interact");   
         }
     }
 }
