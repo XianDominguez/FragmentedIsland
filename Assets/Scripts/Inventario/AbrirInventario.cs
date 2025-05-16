@@ -25,6 +25,9 @@ public class AbrirInventario : MonoBehaviour
     public Button craftearHacha;
     public Button craftearMadera;
 
+    bool inventarioAbierto;
+    bool menuCrafteoAbierto;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -40,6 +43,9 @@ public class AbrirInventario : MonoBehaviour
         banderaaInventario = false;
         banderaCrafteo = false;
 
+        inventarioAbierto = false;
+        menuCrafteoAbierto  = false;
+
         craftearPico.interactable = false;
         craftearHacha.interactable = false;
         craftearMadera.interactable = false;
@@ -48,13 +54,16 @@ public class AbrirInventario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !menuCrafteoAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
 
             if (banderaaInventario == false)
             {
                 inventario.SetActive(true);
+
+                inventarioAbierto = true;
+
                 banderaaInventario = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -65,6 +74,9 @@ public class AbrirInventario : MonoBehaviour
             else
             {
                 inventario.SetActive(false);
+
+                inventarioAbierto = false;
+
                 banderaaInventario = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -74,13 +86,14 @@ public class AbrirInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !inventarioAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
 
             if (banderaCrafteo == false)
             {
                 UiCrafteo.SetActive(true);
+                menuCrafteoAbierto = true;
 
                 Crafteo crafteo = UiCrafteo.GetComponent<Crafteo>();
                 IntentarCraftear();
@@ -98,6 +111,8 @@ public class AbrirInventario : MonoBehaviour
             }
             else
             {
+                menuCrafteoAbierto = false;
+
                 UiCrafteo.SetActive(false);
                 banderaCrafteo = false;
                 Cursor.lockState = CursorLockMode.Locked;
