@@ -10,6 +10,9 @@ TagManager:
   - Material
   - PiedraPicable
   - MenaMetal
+  - ArbolPuente
+  - Cofre
+  - ArenaCofre
   layers:
   - Default
   - TransparentFX

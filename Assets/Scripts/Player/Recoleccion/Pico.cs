@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Pico : MonoBehaviour
 {
+    public int menaMetalRecogida;
     public int piedraRecogida;
 
     public SumarMaterial sumarMaterial;
@@ -50,9 +51,9 @@ public class Pico : MonoBehaviour
 
         if (other.gameObject.CompareTag("MenaMetal"))
         {
-            if (piedraRecogida < 2)
+            if (menaMetalRecogida < 2)
             {
-                piedraRecogida++;
+                menaMetalRecogida++;
             }
             else
             {

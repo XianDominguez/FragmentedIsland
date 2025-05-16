@@ -22,6 +22,10 @@ public class Personaje : MonoBehaviour
 
     public SumarMaterial sumarMaterial;
 
+    bool cofreRecogido = false;
+    bool cofreDesenterrado = false;
+    public Animator animatorCofre;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +51,8 @@ public class Personaje : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
         {
+            GameObject pala = GameObject.Find("PalaIdle");
+
             RaycastHit raycast;
             if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
             {
@@ -62,13 +68,35 @@ public class Personaje : MonoBehaviour
 
                     objetoInteraccionE.SetActive(false);
                 }
+
+                if (raycast.collider.gameObject.CompareTag("ArenaCofre") && !cofreDesenterrado && pala.activeInHierarchy)
+                {
+                   
+                    animatorCofre.Play("AbrirCofre");
+
+                    cofreDesenterrado = true;       
+                }
+
+                if (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido)
+                {
+                    Cofre scriptCofre = raycast.collider.gameObject.GetComponent<Cofre>();
+
+                    scriptCofre.RecogerCofre();
+
+                    cofreRecogido = true;
+
+
+                }
+
+
+
             }
 
         }
         
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
         {
-            if (raycast.collider.gameObject.CompareTag("Material"))
+            if (raycast.collider.gameObject.CompareTag("Material") || (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido) || (raycast.collider.gameObject.CompareTag("ArenaCofre") && !cofreDesenterrado))
             {
                 objetoInteraccionE.SetActive(true);
             }
