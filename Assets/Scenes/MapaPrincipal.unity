@@ -12757,6 +12757,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a9d816e650f32b4fbcb07112d85a65f, type: 2}
   - {fileID: 11400000, guid: 3a9d816e650f32b4fbcb07112d85a65f, type: 2}
   - {fileID: 11400000, guid: a3a8532504d645244a26b12511211b02, type: 2}
+  sumarMaterial: {fileID: 749008997}
 --- !u!4 &942388318489508002
 Transform:
   m_ObjectHideFlags: 0

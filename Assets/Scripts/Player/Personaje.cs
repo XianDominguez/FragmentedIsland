@@ -71,10 +71,17 @@ public class Personaje : MonoBehaviour
 
                 if (raycast.collider.gameObject.CompareTag("ArenaCofre") && !cofreDesenterrado && pala.activeInHierarchy)
                 {
-                   
+                    Animator animPala = pala.GetComponent<Animator>();
+
+                    animPala.SetBool("isSecondary", true);
+                    animPala.SetTrigger("AccionSecundaria");
+                    animPala.SetBool("bandera", false);
+
+                    animPala.Play("PalaExcavar");
+
                     animatorCofre.Play("AbrirCofre");
 
-                    cofreDesenterrado = true;       
+                    cofreDesenterrado = true;    
                 }
 
                 if (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido)
@@ -85,11 +92,9 @@ public class Personaje : MonoBehaviour
 
                     cofreRecogido = true;
 
+                    objetoInteraccionE.SetActive(false);
 
                 }
-
-
-
             }
 
         }

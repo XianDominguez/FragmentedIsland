@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PersonajeAnimaciones : MonoBehaviour
 {
-
-
     public Animator animator;
 
     private bool alternarAtaque = false;

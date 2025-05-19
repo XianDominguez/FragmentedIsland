@@ -18,11 +18,6 @@ public class SumarMaterial : MonoBehaviour
         animator = GetComponent<Animator>();    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void AnimacionSumar(Collider other)
     {
         ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
@@ -30,6 +25,16 @@ public class SumarMaterial : MonoBehaviour
         sumaMaterial.text = "+ 1 " + itemObject.ItemData.name;
 
         material.sprite = itemObject.ItemData.iconoItem;
+
+        animator.Play("TextoSumarMaterial", -1, 0f);
+    }
+
+    public void SumarCofre(InvetarioItemData itemData)
+    {
+    
+        sumaMaterial.text = "+ 1 " + itemData.name;
+
+        material.sprite = itemData.iconoItem;
 
         animator.Play("TextoSumarMaterial", -1, 0f);
     }
