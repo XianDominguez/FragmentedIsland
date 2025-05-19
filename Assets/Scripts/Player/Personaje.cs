@@ -69,31 +69,32 @@ public class Personaje : MonoBehaviour
                     objetoInteraccionE.SetActive(false);
                 }
 
-                if (raycast.collider.gameObject.CompareTag("ArenaCofre") && !cofreDesenterrado && pala.activeInHierarchy)
+                if (raycast.collider != null && raycast.collider.gameObject.CompareTag("Cofre"))
                 {
-                    Animator animPala = pala.GetComponent<Animator>();
+                    GameObject cofre = raycast.collider.gameObject;
 
-                    animPala.SetBool("isSecondary", true);
-                    animPala.SetTrigger("AccionSecundaria");
-                    animPala.SetBool("bandera", false);
+                    if (!cofreDesenterrado && pala.activeInHierarchy)
+                    {
+                        // Animar pala y cofre
+                        Animator animPala = pala.GetComponent<Animator>();
+                        animPala.SetBool("isSecondary", true);
+                        animPala.SetTrigger("AccionSecundaria");
+                        animPala.SetBool("bandera", false);
+                        animPala.Play("PalaExcavar");
 
-                    animPala.Play("PalaExcavar");
+                        animatorCofre.Play("AbrirCofre");
 
-                    animatorCofre.Play("AbrirCofre");
+                        cofreDesenterrado = true;
+                    }
+                    else if (cofreDesenterrado && !cofreRecogido)
+                    {
+                        Cofre scriptCofre = cofre.GetComponent<Cofre>();
+                        scriptCofre.RecogerCofre(); // Entregar recompensa o similar
 
-                    cofreDesenterrado = true;    
-                }
+                        cofreRecogido = true;
 
-                if (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido)
-                {
-                    Cofre scriptCofre = raycast.collider.gameObject.GetComponent<Cofre>();
-
-                    scriptCofre.RecogerCofre();
-
-                    cofreRecogido = true;
-
-                    objetoInteraccionE.SetActive(false);
-
+                        objetoInteraccionE.SetActive(false); // Oculta el indicador de interacción
+                    }
                 }
             }
 

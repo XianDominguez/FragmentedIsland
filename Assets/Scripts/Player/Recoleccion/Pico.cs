@@ -65,6 +65,7 @@ public class Pico : MonoBehaviour
                 MenaDestr.gameObject.SetActive(true);
 
                 sumarMaterial.AnimacionSumar(other);
+                menaMetalRecogida = 0;
             }
 
         }

@@ -47,7 +47,7 @@ public class EnemigoGolem : MonoBehaviour
 
     public void ComportamientoEnemigo()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > 8)
+        if (Vector3.Distance(transform.position, target.transform.position) > 20)
         {
             cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
