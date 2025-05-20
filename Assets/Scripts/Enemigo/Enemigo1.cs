@@ -142,25 +142,57 @@ public class Enemigo1 : MonoBehaviour
         atacando = false;
     }
 
+    //******************* DETECCION DE COLLISION PARA DANO *****************
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
-            Debug.Log("Dano Esqueleto");
             vidaActual -= 8;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());         
+        }
+
+        if (other.CompareTag("Pico") && puedeRecibirDano)
+        {
+            vidaActual -= 3;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
             StartCoroutine(ResetearInvulnerabilidad());
-            if (vidaActual <= 0)
-            {
-                banderaMuerto = true;
-                MuerteAnim();
-            }
+        }
+
+        if (other.CompareTag("Pala") && puedeRecibirDano)
+        {
+            vidaActual -= 1;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
+        }
+
+        if (other.CompareTag("Hacha") && puedeRecibirDano)
+        {
+            vidaActual -= 5;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
         }
     }
+
     IEnumerator ResetearInvulnerabilidad()
     {
+        if (vidaActual <= 0)
+        {
+            banderaMuerto = true;
+            MuerteAnim();
+        }
+
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
+
         puedeRecibirDano = true;
     }
     void MuerteAnim()

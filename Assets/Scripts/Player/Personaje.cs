@@ -8,23 +8,29 @@ using static UnityEngine.UI.Image;
 
 public class Personaje : MonoBehaviour
 {
-    public float Vida;
+    [Header("Vida")]
+    [Space]
+    public float Vida;      
     public Image barraVida;
+    [Header("Asignaciones")]
+    [Space]
+    public AudioSource audioSource; 
+    public FirstPersonController firstPersonController; //Controlador de movimiento de personaje 
+    public SumarMaterial sumarMaterial;                 //Animacion de suma de material al recogerlo
 
-    public AudioSource audioSource;
     Camera cam;
-
-    public FirstPersonController firstPersonController;
-
-    public GameObject pantallaGameOver;
-    public GameObject objetoInteraccionE;
     RaycastHit raycast;
 
-    public SumarMaterial sumarMaterial;
+    [Header("UI")]
+    [Space]
+    public GameObject pantallaGameOver;
+    public GameObject objetoInteraccionE;
+    [Header("Animator")]
+    [Space]
+    public Animator animatorCofre;
 
     bool cofreRecogido = false;
     bool cofreDesenterrado = false;
-    public Animator animatorCofre;
 
 
     // Start is called before the first frame update
@@ -49,13 +55,16 @@ public class Personaje : MonoBehaviour
             pantallaGameOver.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             GameObject pala = GameObject.Find("PalaIdle");
 
             RaycastHit raycast;
+
             if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
             {
+                //Raycast qeu detecta un material recolectable a mano 
+
                 if(raycast.collider.gameObject.CompareTag("Material"))
                 {
                     ItemObject itemObject = raycast.collider.gameObject.GetComponent<ItemObject>();
@@ -68,6 +77,10 @@ public class Personaje : MonoBehaviour
 
                     objetoInteraccionE.SetActive(false);
                 }
+
+
+
+                //Logica cofre del tesoro
 
                 if (raycast.collider != null && raycast.collider.gameObject.CompareTag("Cofre"))
                 {
