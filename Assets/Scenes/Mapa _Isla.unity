@@ -8001,28 +8001,43 @@ MonoBehaviour:
   iconoDialogo: {fileID: 919132148498868252}
   panelDialogo: {fileID: 1223182390}
   textoDialogo: {fileID: 300854736}
-  lineasDialogo:
-  - "\u201CT\xFA no pareces de por aqu\xED\u2026 Pero tienes pinta de saber cavar.
-    \xBFTe interesa un trato?\u201D"
-  - "\u201CEsta pala me ha sacado m\xE1s de un apuro\u2026 ahora es tu turno de usarla.\u201D"
-  - " \u201CHay un bot\xEDn enterrado en la orilla por donde veniste, junto las palmeras
-    torcidas como mi espalda. Pero ojo\u2026 hay huesudos patrullando por ah\xED.\u201D"
-  - " \u201CVer\xE1s, no puedo ir, mis huesos ya no son lo que eran\u2026 pero te
-    esperar\xE9 aqu\xED. Prometido.\u201D"
-  - " \u201C\xBFYa est\xE1s de vuelta? \xBFTe arrepentiste? No te preocupes, la pala
-    no muerde.\u201D"
-  - " \u201C\xA1Lo lograste! Sab\xEDa que no eras un simple marinero de agua dulce\u2026\u201D"
-  - " \u201CAhora que est\xE1s en racha, te vendr\xEDa bien un hacha\u2026 te servir\xE1
-    para cruzar el r\xEDo.\u201D"
-  - " \u201CAbre tu inventario con [TAB] y fabr\xEDcate una. Un par de piedras, algo
-    de cuerda\u2026 nada que no hayas encontrado ya.\u201D"
-  - " \u201CBien, bien\u2026 ahora toca talar. Los robles m\xE1s gordos est\xE1n
-    cerca del r\xEDo, siguiendo el camino de tierra.\u201D"
-  - " \u201C\xBFMuchas indicaciones? No pasa nada, abre el mapa con [M] y busca los
-    robles. No tiene p\xE9rdida\u2026 a menos que est\xE9s ciego, y eso ya ser\xEDa
-    raro.\u201D"
-  - " \u201CLa madera de roble es buena. Fuerte, noble\u2026 como t\xFA, si no te
-    matan antes. Ve, corta unos cuantos troncos y sigue tu camino cruzando el r\xEDo\u201D"
+  etapasDialogo:
+  - lineas:
+    - "\u201CT\xFA no pareces de por aqu\xED\u2026 Pero tienes pinta de saber cavar.
+      \xBFTe interesa un trato?\u201D"
+    - " \u201CEsta pala me ha sacado m\xE1s de un apuro\u2026 ahora es tu turno de
+      usarla.\u201D"
+    - " \u201CHay un bot\xEDn enterrado en la orilla por donde veniste, junto las
+      palmeras torcidas como mi espalda. Pero ojo\u2026 hay huesudos patrullando
+      por ah\xED.\u201D"
+    - " \u201CVer\xE1s, no puedo ir, mis huesos ya no son lo que eran\u2026 pero
+      te esperar\xE9 aqu\xED. Prometido.\u201D"
+    requiereMision: 1
+    idMision: hablar_viejo
+  - lineas:
+    - "\u201C\xBFYa est\xE1s de vuelta? \xBFTe arrepentiste? No te preocupes, la
+      pala no muerde.\u201D"
+    requiereMision: 1
+    idMision: recoger_tesoro
+  - lineas:
+    - " \u201C\xA1Lo lograste! Sab\xEDa que no eras un simple marinero de agua dulce\u2026\u201D"
+    - " \u201CAhora que est\xE1s en racha, te vendr\xEDa bien un hacha\u2026 te servir\xE1
+      para cruzar el r\xEDo.\u201D"
+    - " \u201CAbre tu inventario con [TAB] y fabr\xEDcate una. Un par de piedras,
+      algo de cuerda\u2026 nada que no hayas encontrado ya.\u201D"
+    requiereMision: 1
+    idMision: 
+  - lineas:
+    - "\u201CBien, bien\u2026 ahora toca talar. Los robles m\xE1s gordos est\xE1n
+      cerca del r\xEDo, siguiendo el camino de tierra.\u201D"
+    - " \u201C\xBFMuchas indicaciones? No pasa nada, abre el mapa con [M] y busca
+      los robles. No tiene p\xE9rdida\u2026 a menos que est\xE9s ciego, y eso ya
+      ser\xEDa raro.\u201D"
+    - " \u201CLa madera de roble es buena. Fuerte, noble\u2026 como t\xFA, si no
+      te matan antes. Ve, corta unos cuantos troncos y sigue tu camino cruzando el
+      r\xEDo\u201D"
+    requiereMision: 1
+    idMision: 
 --- !u!135 &397539217
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17345,10 +17360,10 @@ PrefabInstance:
       addedObject: {fileID: 397539215}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef3f06f6d9dffe5488e651f06c61db87, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 397539216}
+      addedObject: {fileID: 397539217}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef3f06f6d9dffe5488e651f06c61db87, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 397539217}
+      addedObject: {fileID: 397539216}
     - targetCorrespondingSourceObject: {fileID: 3625047171761393350, guid: ef3f06f6d9dffe5488e651f06c61db87, type: 3}
       insertIndex: -1
       addedObject: {fileID: 489881990}
@@ -30467,6 +30482,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5647610151453067263, guid: 2b60d4a9a155b0545883252cb2810ca9, type: 3}
+--- !u!1 &1749352854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749352856}
+  - component: {fileID: 1749352855}
+  m_Layer: 0
+  m_Name: ControlMisiones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1749352855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749352854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb81260e06f24f4448df6d8b1e17b236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  misiones:
+  - id: hablar_viejo
+    nombre: Habla con el viejo
+    descripcion: 
+    completada: 0
+  - id: recoger_tesoro
+    nombre: Busqueda del tesoro
+    descripcion: 
+    completada: 0
+--- !u!4 &1749352856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749352854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 695.9709, y: 4.17762, z: 949.2036}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1752286198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 118226473601218419, guid: 2b60d4a9a155b0545883252cb2810ca9, type: 3}
@@ -95195,6 +95263,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1266839715}
   - {fileID: 1822286576}
+  - {fileID: 1749352856}
   - {fileID: 1009578367}
   - {fileID: 4366953017109893372}
   - {fileID: 1116450001}

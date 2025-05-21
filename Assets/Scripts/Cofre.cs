@@ -26,6 +26,7 @@ public class Cofre : MonoBehaviour
         }
 
         Transform mats = transform.Find("Mats");
+        ControlMisiones.Instance.CompletarMision("recoger_tesoro");
         Destroy(mats.gameObject);
     }
 }
