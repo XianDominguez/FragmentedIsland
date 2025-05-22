@@ -78,6 +78,16 @@ public class Personaje : MonoBehaviour
                     objetoInteraccionE.SetActive(false);
                 }
 
+                if (raycast.collider.gameObject.CompareTag("Horno"))
+                {
+                    Horno horno = raycast.collider.gameObject.GetComponent<Horno>();
+
+                    horno.ComprobarPosibilidades(horno.receta,horno.sistemaDeInventario.inventario);
+                    horno.IntentarCraftear();
+
+                    objetoInteraccionE.SetActive(false);
+                }
+
 
 
                 //Logica cofre del tesoro
@@ -115,7 +125,7 @@ public class Personaje : MonoBehaviour
         
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
         {
-            if (raycast.collider.gameObject.CompareTag("Material") || (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido) || (raycast.collider.gameObject.CompareTag("ArenaCofre") && !cofreDesenterrado))
+            if (raycast.collider.gameObject.CompareTag("Material") || (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido) || raycast.collider.gameObject.CompareTag("Horno"))
             {
                 objetoInteraccionE.SetActive(true);
             }

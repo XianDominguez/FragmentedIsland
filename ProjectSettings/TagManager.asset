@@ -17,6 +17,9 @@ TagManager:
   - Pala
   - Hacha
   - Dialogo
+  - Horno
+  - viejo
+  - herrero
   layers:
   - Default
   - TransparentFX

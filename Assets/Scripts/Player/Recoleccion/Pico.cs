@@ -9,6 +9,8 @@ public class Pico : MonoBehaviour
     public int menaMetalRecogida;
     public int piedraRecogida;
 
+    private int menasDeMetal;
+
     public SumarMaterial sumarMaterial;
 
     
@@ -65,6 +67,12 @@ public class Pico : MonoBehaviour
                 MenaDestr.gameObject.SetActive(true);
 
                 sumarMaterial.AnimacionSumar(other);
+                menasDeMetal++;
+                if(menasDeMetal == 3)
+                {
+                    ControlMisiones.Instance.CompletarMision("picar_hierro");
+
+                }
                 menaMetalRecogida = 0;
             }
 

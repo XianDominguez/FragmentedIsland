@@ -10,7 +10,7 @@ public class Crafteo : MonoBehaviour
     public AbrirInventario abrirInventario;
 
    public bool hachaCrafteada;
-  public  bool picoCrafteado;
+   public  bool picoCrafteado;
 
     private void Start()
     {

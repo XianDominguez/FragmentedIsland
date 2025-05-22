@@ -139,7 +139,8 @@ public class Dialogo : MonoBehaviour
         firstPersonController.enabled = true;
         personajeAnimaciones.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
-        ControlMisiones.Instance.CompletarMision("hablar_viejo");
+        ControlMisiones.Instance.CompletarMision("hablar_" + gameObject.tag);
+        Debug.Log("hablar_" + gameObject.tag);
     }
 
     private void OnTriggerEnter(Collider other)
