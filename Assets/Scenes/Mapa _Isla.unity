@@ -8023,10 +8023,10 @@ MonoBehaviour:
     - " \u201C\xA1Lo lograste! Sab\xEDa que no eras un simple marinero de agua dulce\u2026\u201D"
     - " \u201CAhora que est\xE1s en racha, te vendr\xEDa bien un hacha\u2026 te servir\xE1
       para cruzar el r\xEDo.\u201D"
-    - " \u201CAbre tu inventario con [TAB] y fabr\xEDcate una. Un par de piedras,
-      algo de cuerda\u2026 nada que no hayas encontrado ya.\u201D"
+    - " \u201CAbre tu inventario de fabricaci\xF3n con [Q] y fabr\xEDcate una. Un
+      par de piedras, algo de cuerda\u2026 nada que no hayas encontrado ya.\u201D"
     requiereMision: 1
-    idMision: 
+    idMision: craftear_hacha
   - lineas:
     - "\u201CBien, bien\u2026 ahora toca talar. Los robles m\xE1s gordos est\xE1n
       cerca del r\xEDo, siguiendo el camino de tierra.\u201D"
@@ -30518,6 +30518,10 @@ MonoBehaviour:
     completada: 0
   - id: recoger_tesoro
     nombre: Busqueda del tesoro
+    descripcion: 
+    completada: 0
+  - id: craftear_hacha
+    nombre: Craftea un hacha
     descripcion: 
     completada: 0
 --- !u!4 &1749352856
@@ -65081,8 +65085,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4366953017109893360}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.55220103, z: -0, w: 0.833711}
-  m_LocalPosition: {x: 718.19, y: 3.3, z: 947.57}
+  m_LocalRotation: {x: -0, y: -0.9994855, z: -0, w: 0.032074694}
+  m_LocalPosition: {x: 753.1, y: 27.59, z: 625.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65090,7 +65094,7 @@ Transform:
   - {fileID: 1918519011}
   - {fileID: 543450652373674439}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -67.036, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -176.324, z: 0}
 --- !u!33 &4366953017109893373
 MeshFilter:
   m_ObjectHideFlags: 0

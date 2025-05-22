@@ -17,6 +17,7 @@ public class Dialogo : MonoBehaviour
     private bool empezoDialogo;
     private int indexEtapa;
     private int indexLinea;
+    private bool escribiendoTexto;
 
     private float velocidadEscritura = 0.025f;
 
@@ -29,16 +30,15 @@ public class Dialogo : MonoBehaviour
 
         if (jugadorEnRango && Input.GetKeyDown(KeyCode.T))
         {
-            EtapaDialogo etapaActual = etapasDialogo[indexEtapa];
+            if (escribiendoTexto) return; // Evita interacción mientras se escribe
 
-            Debug.Log(indexEtapa);
+            EtapaDialogo etapaActual = etapasDialogo[indexEtapa];
 
             if (ControlMisiones.Instance.EstaMisionCompletada(etapaActual.idMision))
             {
-                Debug.Log("Se ejecuta 1er if");
                 indexEtapa++;
-                SiguienteDialogo();
-
+                indexLinea = 0;
+                EmpezarDialogo(); // Mostrar nueva etapa desde el principio
             }
             else if (!empezoDialogo)
             {
@@ -46,25 +46,20 @@ public class Dialogo : MonoBehaviour
             }
             else if (textoDialogo.text == etapasDialogo[indexEtapa].lineas[indexLinea])
             {
-                Debug.Log("Se ejecuta 3er if");
                 SiguienteDialogo();
             }
             else
             {
                 StopAllCoroutines();
                 textoDialogo.text = etapasDialogo[indexEtapa].lineas[indexLinea];
+                escribiendoTexto = false;
             }
-        }
-
-        if (empezoDialogo && Input.GetKeyDown(KeyCode.Escape))
-        {
-            TerminarDialogo();
         }
     }
 
     void EmpezarDialogo()
     {
-        //Debug.Log("Empieza el dialogo");
+        SaltarEtapasInnecesarias();
 
         empezoDialogo = true;
         panelDialogo.SetActive(true);
@@ -80,55 +75,51 @@ public class Dialogo : MonoBehaviour
 
     void SiguienteDialogo()
     {
-        //Debug.Log("Siguiente dialogo se suma 1 a indexlinea a " + indexLinea);
-        //Debug.Log("El index de la etapa es " + indexEtapa);
-
         indexLinea++;
-    
-        //Debug.Log("Index de la linea ahora es" + indexLinea);
 
-        if (indexLinea < etapasDialogo[indexEtapa].lineas.Length)
+        // Validaciones de seguridad
+        if (indexEtapa >= etapasDialogo.Length)
         {
-            //Debug.Log("Se muestra el texto en Siguiente Dialogo");
-
-            StartCoroutine(MostrarTexto());
+            TerminarDialogo();
+            return;
         }
-        else
-        {
-            //Debug.Log("El index de la etapa es " + indexEtapa + "    Se ejecuta desde else de siguiente dialogo");
 
+        if (indexLinea >= etapasDialogo[indexEtapa].lineas.Length)
+        {
             EtapaDialogo etapaActual = etapasDialogo[indexEtapa];
 
             // Verificar si necesita misión
             if (etapaActual.requiereMision && !ControlMisiones.Instance.EstaMisionCompletada(etapaActual.idMision))
             {
-                //Debug.Log("El index de la etapa es " + indexEtapa + "    Se ejecuta desde verificacion de mision");
-
                 TerminarDialogo();
-                indexLinea--; // Repetir esta línea si se vuelve a presionar
+                indexLinea--; // Para que se repita la línea si se reinicia el diálogo
                 return;
             }
 
             indexEtapa++;
+            SaltarEtapasInnecesarias();
             indexLinea = 0;
-            //Debug.Log("El index de la etapa es " + indexEtapa + "     Despues de etapa++, el index de la linea se pone en 0");
-
 
             if (indexEtapa < etapasDialogo.Length)
             {
                 StartCoroutine(MostrarTexto());
-                //Debug.Log(indexEtapa);
-
             }
             else
             {
                 TerminarDialogo();
             }
+
+            return;
         }
+
+        // Si aún hay líneas en la misma etapa
+        StartCoroutine(MostrarTexto());
     }
+    
 
     IEnumerator MostrarTexto()
-    { 
+    {
+        escribiendoTexto = true;
         textoDialogo.text = "";
 
         foreach (char ch in etapasDialogo[indexEtapa].lineas[indexLinea])
@@ -136,6 +127,8 @@ public class Dialogo : MonoBehaviour
             textoDialogo.text += ch;
             yield return new WaitForSeconds(velocidadEscritura);
         }
+
+        escribiendoTexto = false;
     }
 
     void TerminarDialogo()
@@ -167,6 +160,18 @@ public class Dialogo : MonoBehaviour
         {
             jugadorEnRango = false;
             iconoDialogo.SetActive(false);
+        }
+    }
+
+    void SaltarEtapasInnecesarias()
+    {
+        while (
+            indexEtapa < etapasDialogo.Length &&
+            etapasDialogo[indexEtapa].requiereMision &&
+            ControlMisiones.Instance.EstaMisionCompletada(etapasDialogo[indexEtapa].idMision)
+        )
+        {
+            indexEtapa++;
         }
     }
 }

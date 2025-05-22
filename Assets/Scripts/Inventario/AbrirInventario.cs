@@ -86,7 +86,7 @@ public class AbrirInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && !inventarioAbierto)
+        if (Input.GetKeyDown(KeyCode.Q) && !inventarioAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
 

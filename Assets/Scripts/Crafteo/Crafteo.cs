@@ -70,6 +70,7 @@ public class Crafteo : MonoBehaviour
 
             // 3. Agregar el ítem resultante
             SistemaDeInventario.Instance.Add(receta.resultItem);
+            ControlMisiones.Instance.CompletarMision("craftear_hacha");
             hachaCrafteada = true;
 
             abrirInventario.IntentarCraftear();
@@ -113,4 +114,5 @@ public class Crafteo : MonoBehaviour
 
         }
     }
+
 }
