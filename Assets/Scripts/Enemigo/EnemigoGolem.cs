@@ -147,16 +147,38 @@ public class EnemigoGolem : MonoBehaviour
     {
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
-            Debug.Log("Dano Golem");
-            vidaActual -= 15;
+            vidaActual -= 5;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+
             StartCoroutine(ResetearInvulnerabilidad());
-            if (vidaActual <= 0)
-            {
-                banderaMuerto = true;
-                MuerteAnim();
-            }
+        }
+
+        if (other.CompareTag("Pico") && puedeRecibirDano)
+        {
+            vidaActual -= 9;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
+        }
+
+        if (other.CompareTag("Pala") && puedeRecibirDano)
+        {
+            vidaActual -= 3;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
+        }
+
+        if (other.CompareTag("Hacha") && puedeRecibirDano)
+        {
+            vidaActual -= 4;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
         }
     }
     IEnumerator ResetearInvulnerabilidad()

@@ -166,7 +166,7 @@ public class Enemigo1 : MonoBehaviour
 
         if (other.CompareTag("Pala") && puedeRecibirDano)
         {
-            vidaActual -= 1;
+            vidaActual -= 8;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 

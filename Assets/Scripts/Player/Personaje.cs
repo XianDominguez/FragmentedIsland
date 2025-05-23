@@ -78,6 +78,15 @@ public class Personaje : MonoBehaviour
                     objetoInteraccionE.SetActive(false);
                 }
 
+                if(raycast.collider.gameObject.CompareTag("EspadaRecoger"))
+                {
+                    ToolBar toolBar = FindObjectOfType<ToolBar>();
+                    toolBar.spritesArmas[0].SetActive(true);
+                    toolBar.DesbloquearArma(0);
+
+                    Destroy(raycast.collider.gameObject);
+                }
+
                 if (raycast.collider.gameObject.CompareTag("Horno"))
                 {
                     Horno horno = raycast.collider.gameObject.GetComponent<Horno>();
@@ -125,7 +134,7 @@ public class Personaje : MonoBehaviour
         
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
         {
-            if (raycast.collider.gameObject.CompareTag("Material") || (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido) || raycast.collider.gameObject.CompareTag("Horno"))
+            if (raycast.collider.gameObject.CompareTag("Material") || (raycast.collider.gameObject.CompareTag("Cofre") && !cofreRecogido) || raycast.collider.gameObject.CompareTag("Horno") || raycast.collider.gameObject.CompareTag("EspadaRecoger"))
             {
                 objetoInteraccionE.SetActive(true);
             }

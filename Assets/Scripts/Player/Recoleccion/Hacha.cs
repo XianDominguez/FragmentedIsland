@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Hacha : MonoBehaviour
 {
+    public SumarMaterial sumarMaterial;
 
     public int golpesArbol;
     private Animator animatorArbol;
@@ -11,19 +12,6 @@ public class Hacha : MonoBehaviour
     GameObject arbolCae;
     GameObject toconArbol;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,6 +29,9 @@ public class Hacha : MonoBehaviour
                 arbolCae = arbolCaeTransform.gameObject;
                 toconArbol = toconArbolTransform.gameObject;
 
+                ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
+                itemObject.CogerObjeto();
+                sumarMaterial.AnimacionSumar(other);
 
                 Destroy(other.gameObject);
                 arbolCae.SetActive(true);
@@ -49,6 +40,29 @@ public class Hacha : MonoBehaviour
                 animatorArbol = arbolCae.GetComponent<Animator>();
 
                 animatorArbol.Play("ArbolVa");
+                golpesArbol = 0;
+            }
+
+        }
+
+        if (other.gameObject.CompareTag("ArbolMadera"))
+        {
+            if (golpesArbol < 2)
+            {
+                golpesArbol++;
+            }
+            else
+            {
+                ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
+                itemObject.CogerObjeto();
+
+                Transform arbol = other.gameObject.transform.parent;
+                Transform tocon = arbol.Find("ArbolCortadoTocon");
+                tocon.gameObject.SetActive(true);
+
+                sumarMaterial.AnimacionSumar(other);
+   
+                golpesArbol = 0;
             }
 
         }

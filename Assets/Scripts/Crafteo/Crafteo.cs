@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -71,6 +72,11 @@ public class Crafteo : MonoBehaviour
             // 3. Agregar el ítem resultante
             SistemaDeInventario.Instance.Add(receta.resultItem);
             ControlMisiones.Instance.CompletarMision("craftear_hacha");
+
+            ToolBar toolBar = FindObjectOfType<ToolBar>();
+            toolBar.spritesArmas[3].SetActive(true);
+            toolBar.DesbloquearArma(3);
+
             hachaCrafteada = true;
 
             abrirInventario.IntentarCraftear();
@@ -101,6 +107,11 @@ public class Crafteo : MonoBehaviour
             // 3. Agregar el ítem resultante
             SistemaDeInventario.Instance.Add(receta.resultItem);
             picoCrafteado = true;
+
+            ToolBar toolBar = FindObjectOfType<ToolBar>();
+            toolBar.spritesArmas[1].SetActive(true);
+            toolBar.DesbloquearArma(1);
+
 
             abrirInventario.IntentarCraftear();
             abrirInventario.IntentarCraftear2();

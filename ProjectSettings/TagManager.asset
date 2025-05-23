@@ -20,6 +20,10 @@ TagManager:
   - Horno
   - viejo
   - herrero
+  - ArbolMadera
+  - Ahoy
+  - Marinero
+  - EspadaRecoger
   layers:
   - Default
   - TransparentFX
