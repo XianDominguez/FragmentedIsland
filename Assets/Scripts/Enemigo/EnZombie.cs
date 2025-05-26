@@ -145,23 +145,48 @@ public class EnZombie : MonoBehaviour
         atacando = false;
     }
 
+    //******************* DETECCION DE COLLISION PARA DANO *****************
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
-            Debug.Log("Dano Zombie");
-            PlayAudioGolpeZombie();
             vidaActual -= 10;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+
             StartCoroutine(ResetearInvulnerabilidad());
-            if (vidaActual <= 0)
-            {
-                banderaMuerto = true;
-                MuerteAnim();
-            }
+        }
+
+        if (other.CompareTag("Pico") && puedeRecibirDano)
+        {
+            vidaActual -= 3;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
+        }
+
+        if (other.CompareTag("Pala") && puedeRecibirDano)
+        {
+            vidaActual -= 2;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
+        }
+
+        if (other.CompareTag("Hacha") && puedeRecibirDano)
+        {
+            vidaActual -= 5;
+            barraVida.value = vidaActual;
+            puedeRecibirDano = false;
+
+            StartCoroutine(ResetearInvulnerabilidad());
         }
     }
+
+
     IEnumerator ResetearInvulnerabilidad()
     {
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad

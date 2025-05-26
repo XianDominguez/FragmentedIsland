@@ -9,6 +9,7 @@ public class Dialogo : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] private GameObject iconoDialogo;
     [SerializeField] private GameObject panelDialogo;
+    [SerializeField] private GameObject textHablar;
     [SerializeField] private TMP_Text textoDialogo;
     [SerializeField] private EtapaDialogo[] etapasDialogo;
 
@@ -175,6 +176,7 @@ public class Dialogo : MonoBehaviour
         {
             jugadorEnRango = true;
             iconoDialogo.SetActive(true);
+            textHablar.SetActive(true);
 
             firstPersonController = other.GetComponent<FirstPersonController>();
             personajeAnimaciones = other.GetComponentInChildren<PersonajeAnimaciones>();
@@ -187,6 +189,8 @@ public class Dialogo : MonoBehaviour
         {
             jugadorEnRango = false;
             iconoDialogo.SetActive(false);
+            textHablar.SetActive(false);
+
         }
     }
 

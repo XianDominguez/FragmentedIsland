@@ -10,8 +10,12 @@ public class EntradaCueva : MonoBehaviour
     public float fadeDuration = 1f;
     public KeyCode teclaInteractuar = KeyCode.E;
 
+    public GameObject feedInteract;
+
     private bool enZona = false;
     private GameObject jugador;
+
+
 
     void Update()
     {
@@ -59,6 +63,7 @@ public class EntradaCueva : MonoBehaviour
         {
             enZona = true;
             jugador = other.gameObject;
+            feedInteract.SetActive(true);
             // Mostrar UI: "Presiona E para entrar"
         }
     }
@@ -69,6 +74,8 @@ public class EntradaCueva : MonoBehaviour
         {
             enZona = false;
             jugador = null;
+            feedInteract.SetActive(false);
+
             // Ocultar UI
         }
     }
