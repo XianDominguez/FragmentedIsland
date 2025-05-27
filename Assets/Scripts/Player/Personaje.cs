@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SmartPoint;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,8 +11,11 @@ public class Personaje : MonoBehaviour
 {
     [Header("Vida")]
     [Space]
-    public float Vida;      
+    public float vida;      
     public Image barraVida;
+
+    public delegate void DeathHandler(GameObject entity);
+    public event DeathHandler OnDeath;
     [Header("Asignaciones")]
     [Space]
     public AudioSource audioSource; 
@@ -20,6 +24,8 @@ public class Personaje : MonoBehaviour
 
     Camera cam;
     RaycastHit raycast;
+
+    public CheckPoint checkPoint;
 
     [Header("UI")]
     [Space]
@@ -40,19 +46,45 @@ public class Personaje : MonoBehaviour
         pantallaGameOver.SetActive(false);
         firstPersonController.enabled = true;
         cam = Camera.main;
-        Vida = 1;
+        vida = 1;
         barraVida.fillAmount = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vida <= 0)
+        /*
+        if (vida <= 0)
         {
             Time.timeScale = 0f; // Pausa el juego
             firstPersonController.enabled = false;
             Cursor.lockState = CursorLockMode.None;
             pantallaGameOver.SetActive(true);
+        }
+        */
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            vida -= 0.1f;
+            barraVida.fillAmount = vida;
+
+            if (vida <= 0f)
+            {
+                Debug.Log("O vida");
+
+                vida = 0f; // evitar valores negativos
+                barraVida.fillAmount = 0f;
+                if (OnDeath != null)
+                {
+                    Debug.Log("OnDeath tiene suscriptores");
+                }
+                else
+                {
+                    Debug.Log("OnDeath está vacío");
+                }
+                Debug.Log("Invocando OnDeath de: " + gameObject.name);
+                OnDeath?.Invoke(gameObject); // <- ¡AQUÍ INVOCAMOS EL EVENTO!
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -156,9 +188,16 @@ public class Personaje : MonoBehaviour
         if (other.CompareTag("arma"))
         {
             Debug.Log("Dano");
-            Vida = Vida - 0.1f;
-            barraVida.fillAmount = Vida;
-        } 
+            vida -= 0.1f;
+            barraVida.fillAmount = vida;
+
+            if (vida <= 0f)
+            {
+                vida = 0f;
+                barraVida.fillAmount = 0f;
+                OnDeath?.Invoke(gameObject); // <- Invocamos también aquí
+            }
+        }
     }
 
 }

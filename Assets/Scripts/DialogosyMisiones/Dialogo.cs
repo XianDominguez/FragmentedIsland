@@ -208,7 +208,7 @@ public class Dialogo : MonoBehaviour
 
     void DeterminarNpc()
     {
-        if(gameObject.CompareTag("Viejo"))
+        if(gameObject.CompareTag("viejo"))
         {
             Image imagenTexto = panelDialogo.GetComponent<Image>();
             imagenTexto.sprite = spritesDialogo[0];
