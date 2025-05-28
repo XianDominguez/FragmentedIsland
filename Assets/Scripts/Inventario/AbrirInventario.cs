@@ -10,8 +10,10 @@ public class AbrirInventario : MonoBehaviour
     public MonoBehaviour personajeAnimaciones;
     public GameObject inventario;
     public GameObject UiCrafteo;
+    public GameObject mapa;
     public bool banderaaInventario;
     public bool banderaCrafteo;
+    public bool banderaMapa;
 
     public Crafteo craftingSystem;
     public RecetasCrafteo recetaMadera;
@@ -27,6 +29,7 @@ public class AbrirInventario : MonoBehaviour
 
     bool inventarioAbierto;
     bool menuCrafteoAbierto;
+    bool mapaAbierto;
 
     // Start is called before the first frame update
     private void Awake()
@@ -54,7 +57,7 @@ public class AbrirInventario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && !menuCrafteoAbierto)
+        if (Input.GetKeyDown(KeyCode.Tab) && !menuCrafteoAbierto && !mapaAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
 
@@ -86,7 +89,7 @@ public class AbrirInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && !inventarioAbierto)
+        if (Input.GetKeyDown(KeyCode.Q) && !inventarioAbierto && !mapaAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
 
@@ -121,6 +124,38 @@ public class AbrirInventario : MonoBehaviour
                 controlMovimiento.enabled = true;
                 personajeAnimaciones.enabled = true;
 
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.M ) && !menuCrafteoAbierto && !inventarioAbierto)
+        {
+            personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
+            if (banderaMapa == false)
+            {
+                mapa.SetActive(true);
+
+                mapaAbierto = true;
+                banderaMapa = true;
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                controlCamara.enabled = false;
+                controlMovimiento.enabled = false;
+                personajeAnimaciones.enabled = false;
+            }
+            else
+            {
+                mapa.SetActive(false);
+
+                mapaAbierto = false;
+                banderaMapa = false;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                controlCamara.enabled = true;
+                personajeAnimaciones.enabled = true;
+                controlMovimiento.enabled = true;
             }
         }
     }

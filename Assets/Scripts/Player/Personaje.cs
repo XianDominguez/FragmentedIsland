@@ -25,7 +25,7 @@ public class Personaje : MonoBehaviour
     Camera cam;
     RaycastHit raycast;
 
-    public CheckPoint checkPoint;
+    private CheckPoint checkPoint;
 
     [Header("UI")]
     [Space]
@@ -38,6 +38,13 @@ public class Personaje : MonoBehaviour
     bool cofreRecogido = false;
     bool cofreDesenterrado = false;
 
+    public MonoBehaviour controlCamara;
+    public MonoBehaviour controlMovimiento;
+    public MonoBehaviour personajeAnimaciones;
+
+    public CanvasGroup fadeCanvas; // UI para fade (CanvasGroup con imagen negra)
+    public float fadeDuration = 3f;
+    public float fadeDead = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -53,41 +60,7 @@ public class Personaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (vida <= 0)
-        {
-            Time.timeScale = 0f; // Pausa el juego
-            firstPersonController.enabled = false;
-            Cursor.lockState = CursorLockMode.None;
-            pantallaGameOver.SetActive(true);
-        }
-        */
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            vida -= 0.1f;
-            barraVida.fillAmount = vida;
-
-            if (vida <= 0f)
-            {
-                Debug.Log("O vida");
-
-                vida = 0f; // evitar valores negativos
-                barraVida.fillAmount = 0f;
-                if (OnDeath != null)
-                {
-                    Debug.Log("OnDeath tiene suscriptores");
-                }
-                else
-                {
-                    Debug.Log("OnDeath está vacío");
-                }
-                Debug.Log("Invocando OnDeath de: " + gameObject.name);
-                OnDeath?.Invoke(gameObject); // <- ¡AQUÍ INVOCAMOS EL EVENTO!
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
         {
             GameObject pala = GameObject.Find("PalaIdle");
 
@@ -180,7 +153,8 @@ public class Personaje : MonoBehaviour
  
     public void Reaparecer()
     {
-        SceneManager.LoadScene("MapaPrincipal");
+        OnDeath?.Invoke(gameObject);
+        StartCoroutine(ReaparecerConFade());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -193,11 +167,54 @@ public class Personaje : MonoBehaviour
 
             if (vida <= 0f)
             {
+                personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
                 vida = 0f;
                 barraVida.fillAmount = 0f;
-                OnDeath?.Invoke(gameObject); // <- Invocamos también aquí
+                StartCoroutine(MorirConFade());
+
             }
         }
+    }
+
+    private IEnumerator Fade(float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            fadeCanvas.alpha = Mathf.Lerp(from, to, elapsed / duration);
+            yield return null;
+        }
+        fadeCanvas.alpha = to;
+    }
+
+    private IEnumerator ReaparecerConFade()
+    {
+        Time.timeScale = 1f;
+        pantallaGameOver.SetActive(false);
+
+        yield return StartCoroutine(Fade(1, 0, fadeDuration)); // Fade desde negro a juego
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        controlCamara.enabled = true;
+        controlMovimiento.enabled = true;
+        personajeAnimaciones.enabled = true;
+    }
+
+    private IEnumerator MorirConFade()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        controlCamara.enabled = false;
+        controlMovimiento.enabled = false;
+        personajeAnimaciones.enabled = false;
+
+        yield return StartCoroutine(Fade(0, 1, fadeDead)); // Fade a negro
+
+        Time.timeScale = 0f;
+        pantallaGameOver.SetActive(true); // Mostrar pantalla Game Over después del fade
     }
 
 }
