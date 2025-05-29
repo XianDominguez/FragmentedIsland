@@ -16,12 +16,14 @@ public class ToolBar : MonoBehaviour
     public GameObject palaMano;
     public GameObject picoMano;
     public GameObject hachaMano;
+    private GameObject armaActual = null;
 
     private void Start()
     {
         armasDesbloqueadas = new bool[4]; // espada, pico, pala, hacha
         toolBar.sprite = toolBarSprites[0];
 
+        armaActual = soloMano.gameObject;
         soloMano.SetActive(true);
         espadaMano.SetActive(false);
         palaMano.SetActive(false);
@@ -50,56 +52,51 @@ public class ToolBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && armasDesbloqueadas[0])
+        if (Input.GetKeyDown(KeyCode.Alpha1) && armasDesbloqueadas[0] && !espadaMano.activeInHierarchy)
         {
-            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
-
-            personajeAnimaciones.EstadoAnimaciones();
-            if(personajeAnimaciones.animacionEjecutandose == false)
-            {
-                toolBar.sprite = toolBarSprites[0];
-                QuitarMano();
-                espadaMano.SetActive(true);
-            }
+            StartCoroutine(CambiarArmaConAnimacion(espadaMano, 0));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && armasDesbloqueadas[1])
+        if (Input.GetKeyDown(KeyCode.Alpha2) && armasDesbloqueadas[1] && !picoMano.activeInHierarchy)
         {
-            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
-
-            personajeAnimaciones.EstadoAnimaciones();
-            if (personajeAnimaciones.animacionEjecutandose == false)
-            {
-                toolBar.sprite = toolBarSprites[1];
-                QuitarMano();
-                picoMano.SetActive(true);
-            }
+            StartCoroutine(CambiarArmaConAnimacion(picoMano, 1));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && armasDesbloqueadas[2])
+        if (Input.GetKeyDown(KeyCode.Alpha3) && armasDesbloqueadas[2] && !palaMano.activeInHierarchy)
         {
-            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
-
-            personajeAnimaciones.EstadoAnimaciones();
-
-            if (personajeAnimaciones.animacionEjecutandose == false)
-            {
-                toolBar.sprite = toolBarSprites[2];
-                QuitarMano();
-                palaMano.SetActive(true);
-            }
+            StartCoroutine(CambiarArmaConAnimacion(palaMano, 2));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && armasDesbloqueadas[3])
+        if (Input.GetKeyDown(KeyCode.Alpha4) && armasDesbloqueadas[3] && !hachaMano.activeInHierarchy)
         {
-            PersonajeAnimaciones personajeAnimaciones = FindObjectOfType<PersonajeAnimaciones>();
-
-            personajeAnimaciones.EstadoAnimaciones();
-
-            if (personajeAnimaciones.animacionEjecutandose == false)
-            {
-                toolBar.sprite = toolBarSprites[3];
-                QuitarMano();
-                hachaMano.SetActive(true);
-            }
+            StartCoroutine(CambiarArmaConAnimacion(hachaMano, 3));
         }
     }
+
+    IEnumerator CambiarArmaConAnimacion(GameObject nuevaArma, int spriteIndex)
+    {
+    
+            Animator animActual = armaActual.GetComponent<Animator>();
+            if (animActual != null)
+            {
+                animActual.Play("Guardar");
+
+                yield return new WaitForSeconds(0.2f);
+
+            }
+            armaActual.SetActive(false);
+
+
+        // Actualizar sprite en la UI
+        toolBar.sprite = toolBarSprites[spriteIndex];
+
+        // Activar nueva arma
+        nuevaArma.SetActive(true);
+
+        Animator animNueva = nuevaArma.GetComponent<Animator>();
+        if (animNueva != null)
+        {
+            animNueva.Play("Sacar");
+        }
+
+        armaActual = nuevaArma;
+    }
 }
+    
