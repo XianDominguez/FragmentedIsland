@@ -27,7 +27,6 @@ namespace SmartPoint
                 if (entity.TryGetComponent<Personaje>(out var vida))
                 {
                     vida.OnDeath += HandleDeath;
-                    Debug.Log($"✔ Suscrito OnDeath de {entity.name}");
                 }
                 else
                 {

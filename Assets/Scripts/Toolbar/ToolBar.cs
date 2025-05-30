@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,25 +55,46 @@ public class ToolBar : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && armasDesbloqueadas[0] && !espadaMano.activeInHierarchy)
         {
-            StartCoroutine(CambiarArmaConAnimacion(espadaMano, 0));
+            Animator animActual = armaActual.GetComponent<Animator>();
+            AnimatorStateInfo stateInfo = animActual.GetCurrentAnimatorStateInfo(0);
+            
+            if (!stateInfo.IsName("Ataque 1") && !stateInfo.IsName("Ataque 2"))
+            {
+                StartCoroutine(CambiarArmaConAnimacion(espadaMano, 0));
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && armasDesbloqueadas[1] && !picoMano.activeInHierarchy)
         {
-            StartCoroutine(CambiarArmaConAnimacion(picoMano, 1));
+            Animator animActual = armaActual.GetComponent<Animator>();
+            AnimatorStateInfo stateInfo = animActual.GetCurrentAnimatorStateInfo(0);
+
+            if (!stateInfo.IsName("Ataque 1") && !stateInfo.IsName("Ataque 2"))
+            {
+                StartCoroutine(CambiarArmaConAnimacion(picoMano, 1));
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && armasDesbloqueadas[2] && !palaMano.activeInHierarchy)
         {
-            StartCoroutine(CambiarArmaConAnimacion(palaMano, 2));
+            Animator animActual = armaActual.GetComponent<Animator>();
+            AnimatorStateInfo stateInfo = animActual.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("Ataque 1") && !stateInfo.IsName("Ataque 2"))
+            {
+                StartCoroutine(CambiarArmaConAnimacion(palaMano, 2));
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && armasDesbloqueadas[3] && !hachaMano.activeInHierarchy)
         {
-            StartCoroutine(CambiarArmaConAnimacion(hachaMano, 3));
+            Animator animActual = armaActual.GetComponent<Animator>();
+            AnimatorStateInfo stateInfo = animActual.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("Ataque 1") && !stateInfo.IsName("Ataque 2"))
+            {
+                StartCoroutine(CambiarArmaConAnimacion(hachaMano, 3));
+            }
         }
     }
 
     IEnumerator CambiarArmaConAnimacion(GameObject nuevaArma, int spriteIndex)
     {
-    
             Animator animActual = armaActual.GetComponent<Animator>();
             if (animActual != null)
             {
@@ -98,5 +120,7 @@ public class ToolBar : MonoBehaviour
 
         armaActual = nuevaArma;
     }
+
+   
 }
     

@@ -90,6 +90,9 @@ public class FirstPersonController : MonoBehaviour
     private bool isSprintCooldown = false;
     private float sprintCooldownReset;
 
+    public float SprintRemaining => sprintRemaining;
+    public float SprintDuration => sprintDuration;
+
     #endregion
 
     #region Jump
@@ -358,7 +361,9 @@ public class FirstPersonController : MonoBehaviour
 
         CheckGround();
 
-        if(enableHeadBob)
+       
+
+        if (enableHeadBob)
         {
             HeadBob();
         }

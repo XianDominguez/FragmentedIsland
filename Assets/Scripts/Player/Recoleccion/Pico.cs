@@ -13,6 +13,12 @@ public class Pico : MonoBehaviour
 
     public SumarMaterial sumarMaterial;
 
+    public AudioSource audioMenas;
+
+    public AudioClip romperMena;
+    public AudioClip picarMena;
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +44,7 @@ public class Pico : MonoBehaviour
 
                 sumarMaterial.AnimacionSumar(other);
 
+
                 piedraRecogida++;
             }
             else
@@ -55,10 +62,14 @@ public class Pico : MonoBehaviour
         {
             if (menaMetalRecogida < 2)
             {
+                audioMenas.PlayOneShot(picarMena);
+
                 menaMetalRecogida++;
             }
             else
             {
+                audioMenas.PlayOneShot(romperMena);
+
                 ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
                 itemObject.CogerObjeto();
 

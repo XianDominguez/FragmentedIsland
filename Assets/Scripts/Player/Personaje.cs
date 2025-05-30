@@ -46,9 +46,16 @@ public class Personaje : MonoBehaviour
     public float fadeDuration = 3f;
     public float fadeDead = 0.2f;
 
+    public Image damageScreen;
+    public float damageFlashDuration = 0.3f;
+
+    private Coroutine flashCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
+        damageScreen.enabled = false;
+
         Time.timeScale = 1f; // Despausa el juego
         pantallaGameOver.SetActive(false);
         firstPersonController.enabled = true;
@@ -164,6 +171,10 @@ public class Personaje : MonoBehaviour
             Debug.Log("Dano");
             vida -= 0.1f;
             barraVida.fillAmount = vida;
+            if (flashCoroutine != null)
+                StopCoroutine(flashCoroutine);
+
+            flashCoroutine = StartCoroutine(FlashDamageScreen());
 
             if (vida <= 0f)
             {
@@ -215,6 +226,16 @@ public class Personaje : MonoBehaviour
 
         Time.timeScale = 0f;
         pantallaGameOver.SetActive(true); // Mostrar pantalla Game Over después del fade
+    }
+
+
+    private IEnumerator FlashDamageScreen()
+    {
+        damageScreen.enabled = true;
+
+        yield return new WaitForSeconds(damageFlashDuration);
+
+        damageScreen.enabled = false;
     }
 
 }
