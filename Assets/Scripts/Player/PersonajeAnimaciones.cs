@@ -13,7 +13,20 @@ public class PersonajeAnimaciones : MonoBehaviour
 
     public bool animacionEjecutandose;
 
-    public AudioSource audioSourceSonidoEspada;
+    public AudioSource audioSourceSonidoArma;
+
+    public AudioClip espada1;
+    public AudioClip espada2;
+    public AudioClip[] espadaDano;
+
+
+    public AudioClip[] hachaSwing;
+    public AudioClip[] hachaDano;
+
+    public AudioClip[] palaSwing;
+    public AudioClip[] palaDano;
+    public AudioClip desenterrar;
+
 
 
     // Start is called before the first frame update
@@ -92,11 +105,94 @@ public class PersonajeAnimaciones : MonoBehaviour
         }
     }
 
-    public void PlayAudioEspada()
+    #region Espada
+
+    public void PlayAudioEspada1()
     {
-        audioSourceSonidoEspada.pitch = Random.Range(0.9f, 1.1f);
-        audioSourceSonidoEspada.Play();
+        audioSourceSonidoArma.clip = espada1;
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
     }
+
+    public void PlayAudioEspada2()
+    {
+        audioSourceSonidoArma.clip = espada2;
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    public void DanoEspada()
+    {
+        if (espadaDano.Length > 0)
+        {
+            int indice = Random.Range(0, espadaDano.Length);
+            audioSourceSonidoArma.clip = espadaDano[indice];
+        }
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    #endregion
+
+    #region Hacha
+
+    public void PlayAudioHacha()
+    {
+        if (hachaSwing.Length > 0)
+        {
+            int indice = Random.Range(0, hachaSwing.Length);
+            audioSourceSonidoArma.clip = hachaSwing[indice];
+        }
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    public void DanoHacha()
+    {
+        if (hachaDano.Length > 0)
+        {
+            int indice = Random.Range(0, hachaDano.Length);
+            audioSourceSonidoArma.clip = hachaDano[indice];
+        }
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    #endregion
+
+
+    #region Pala
+
+    public void PlaySwingPala()
+    {
+        if (palaSwing.Length > 0)
+        {
+            int indice = Random.Range(0, palaSwing.Length);
+            audioSourceSonidoArma.clip = palaSwing[indice];
+        }
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    public void DanoPala()
+    {
+        if (palaDano.Length > 0)
+        {
+            int indice = Random.Range(0, palaDano.Length);
+            audioSourceSonidoArma.clip = palaDano[indice];
+        }
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    public void DesenterrarTesoro()
+    {
+        audioSourceSonidoArma.clip = desenterrar;
+        audioSourceSonidoArma.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSonidoArma.Play();
+    }
+
+    #endregion
 
     public void TerminarAtaque()
     {

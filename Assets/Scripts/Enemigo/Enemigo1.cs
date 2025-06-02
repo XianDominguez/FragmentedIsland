@@ -27,6 +27,16 @@ public class Enemigo1 : MonoBehaviour
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
+    public AudioSource audioSourceEsqueleto;
+    public AudioSource audioSourceSwingEsqueleto;
+
+    public AudioClip Agro;
+    public AudioClip[] sonidosDeDano;
+    public AudioClip[] sonidosDeMuerte;
+    public AudioClip[] sonidosDeSwing;
+
+    private bool teSigue;
+
     private void Awake()
     {
         vidaActual = vidaMaxima;
@@ -53,6 +63,8 @@ public class Enemigo1 : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 8)
         {
+            teSigue = false;
+
             ani.SetBool("run", false);
 
             cronometro += 1 * Time.deltaTime;
@@ -109,6 +121,14 @@ public class Enemigo1 : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
             {
+                if(!teSigue)
+                {
+                    audioSourceEsqueleto.clip = Agro;
+                    audioSourceEsqueleto.Play();
+                    teSigue = true;
+                }
+               
+
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("walk", false);
@@ -146,11 +166,15 @@ public class Enemigo1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PersonajeAnimaciones personajeAnimaciones = other.GetComponentInParent<PersonajeAnimaciones>();
+
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             vidaActual -= 8;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+
+            personajeAnimaciones.DanoEspada();
 
             StartCoroutine(ResetearInvulnerabilidad());         
         }
@@ -170,6 +194,9 @@ public class Enemigo1 : MonoBehaviour
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 
+            personajeAnimaciones.DanoPala();
+
+
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -178,6 +205,8 @@ public class Enemigo1 : MonoBehaviour
             vidaActual -= 5;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+
+            personajeAnimaciones.DanoHacha();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -190,6 +219,7 @@ public class Enemigo1 : MonoBehaviour
             banderaMuerto = true;
             MuerteAnim();
         }
+        RecibirDano();
 
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
 
@@ -197,7 +227,36 @@ public class Enemigo1 : MonoBehaviour
     }
     void MuerteAnim()
     {
+        if (sonidosDeMuerte.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeMuerte.Length);
+            audioSourceEsqueleto.clip = sonidosDeMuerte[indice];
+        }
+        audioSourceEsqueleto.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceEsqueleto.Play();
         ani.Play("Muelte");
+    }
+
+    public void RecibirDano()
+    {
+        if (sonidosDeDano.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeDano.Length);
+            audioSourceEsqueleto.clip = sonidosDeDano[indice];
+        }
+        audioSourceEsqueleto.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceEsqueleto.Play();
+    }
+
+    public void AtaqueSonidoEsqueleto()
+    {
+        if (sonidosDeSwing.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeSwing.Length);
+            audioSourceSwingEsqueleto.clip = sonidosDeSwing[indice];
+        }
+        audioSourceSwingEsqueleto.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSwingEsqueleto.Play();
     }
 
     public void MuerteDestroy()

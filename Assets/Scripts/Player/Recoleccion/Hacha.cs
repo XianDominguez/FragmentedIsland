@@ -12,6 +12,13 @@ public class Hacha : MonoBehaviour
     GameObject arbolCae;
     GameObject toconArbol;
 
+    public AudioSource arbolCaeAudioSource;
+
+    public AudioClip arbolCayendo;
+    public AudioClip talar1;
+    public AudioClip talar2;
+    public AudioClip troncoTalado;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,9 +27,19 @@ public class Hacha : MonoBehaviour
             if (golpesArbol < 2)
             {
                 golpesArbol++;
+                if(golpesArbol > 1)
+                {
+                    arbolCaeAudioSource.PlayOneShot(talar1);
+                }
+                else
+                {
+                    arbolCaeAudioSource.PlayOneShot(talar2);
+
+                }
             }
             else
             {
+
                 Transform arbolCaeTransform = other.transform.parent.Find("ArbolCortadoPuente");
                 Transform toconArbolTransform = other.transform.parent.Find("ArbolCortadoTocon");
 
@@ -40,6 +57,8 @@ public class Hacha : MonoBehaviour
                 animatorArbol = arbolCae.GetComponent<Animator>();
 
                 animatorArbol.Play("ArbolVa");
+                arbolCaeAudioSource.PlayOneShot(arbolCayendo);
+
                 golpesArbol = 0;
             }
 
@@ -50,6 +69,15 @@ public class Hacha : MonoBehaviour
             if (golpesArbol < 2)
             {
                 golpesArbol++;
+                if (golpesArbol > 1)
+                {
+                    arbolCaeAudioSource.PlayOneShot(talar1);
+                }
+                else
+                {
+                    arbolCaeAudioSource.PlayOneShot(talar2);
+
+                }
             }
             else
             {
@@ -61,7 +89,8 @@ public class Hacha : MonoBehaviour
                 tocon.gameObject.SetActive(true);
 
                 sumarMaterial.AnimacionSumar(other);
-   
+                arbolCaeAudioSource.PlayOneShot(troncoTalado);
+
                 golpesArbol = 0;
             }
 

@@ -68,81 +68,81 @@ public class Personaje : MonoBehaviour
     void Update()
     {
             if (Input.GetKeyDown(KeyCode.E))
-        {
-            GameObject pala = GameObject.Find("PalaIdle");
-
-            RaycastHit raycast;
-
-            if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
             {
-                //Raycast qeu detecta un material recolectable a mano 
+                GameObject pala = GameObject.Find("PalaIdle");
 
-                if(raycast.collider.gameObject.CompareTag("Material"))
+                RaycastHit raycast;
+    
+                if(Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
                 {
-                    ItemObject itemObject = raycast.collider.gameObject.GetComponent<ItemObject>();
+                    //Raycast que detecta un material recolectable a mano cuando el jugador lo mira
 
-                    itemObject.CogerObjeto();
-
-                    Collider other = raycast.collider;
-
-                    sumarMaterial.AnimacionSumar(other);
-
-                    objetoInteraccionE.SetActive(false);
-                }
-
-                if(raycast.collider.gameObject.CompareTag("EspadaRecoger"))
-                {
-                    ToolBar toolBar = FindObjectOfType<ToolBar>();
-                    toolBar.spritesArmas[0].SetActive(true);
-                    toolBar.DesbloquearArma(0);
-
-                    Destroy(raycast.collider.gameObject);
-                }
-
-                if (raycast.collider.gameObject.CompareTag("Horno"))
-                {
-                    Horno horno = raycast.collider.gameObject.GetComponent<Horno>();
-
-                    horno.ComprobarPosibilidades(horno.receta,horno.sistemaDeInventario.inventario);
-                    horno.IntentarCraftear();
-
-                    objetoInteraccionE.SetActive(false);
-                }
-
-
-
-                //Logica cofre del tesoro
-
-                if (raycast.collider != null && raycast.collider.gameObject.CompareTag("Cofre"))
-                {
-                    GameObject cofre = raycast.collider.gameObject;
-
-                    if (!cofreDesenterrado && pala.activeInHierarchy)
+                    if(raycast.collider.gameObject.CompareTag("Material"))
                     {
-                        // Animar pala y cofre
-                        Animator animPala = pala.GetComponent<Animator>();
-                        animPala.SetBool("isSecondary", true);
-                        animPala.SetTrigger("AccionSecundaria");
-                        animPala.SetBool("bandera", false);
-                        animPala.Play("PalaExcavar");
+                        ItemObject itemObject = raycast.collider.gameObject.GetComponent<ItemObject>();
 
-                        animatorCofre.Play("AbrirCofre");
+                        itemObject.CogerObjeto();
 
-                        cofreDesenterrado = true;
+                        Collider other = raycast.collider;
+
+                        sumarMaterial.AnimacionSumar(other);
+
+                        objetoInteraccionE.SetActive(false);
                     }
-                    else if (cofreDesenterrado && !cofreRecogido)
+
+                    if(raycast.collider.gameObject.CompareTag("EspadaRecoger"))
                     {
-                        Cofre scriptCofre = cofre.GetComponent<Cofre>();
-                        scriptCofre.RecogerCofre(); // Entregar recompensa o similar
+                        ToolBar toolBar = FindObjectOfType<ToolBar>();
+                        toolBar.spritesArmas[0].SetActive(true);
+                        toolBar.DesbloquearArma(0);
 
-                        cofreRecogido = true;
+                        Destroy(raycast.collider.gameObject);
+                    }
 
-                        objetoInteraccionE.SetActive(false); // Oculta el indicador de interacción
+                    if (raycast.collider.gameObject.CompareTag("Horno"))
+                    {
+                        Horno horno = raycast.collider.gameObject.GetComponent<Horno>();
+
+                        horno.ComprobarPosibilidades(horno.receta,horno.sistemaDeInventario.inventario);
+                        horno.IntentarCraftear();
+
+                        objetoInteraccionE.SetActive(false);
+                    }
+
+
+
+                    //Logica cofre del tesoro
+
+                    if (raycast.collider != null && raycast.collider.gameObject.CompareTag("Cofre"))
+                    {
+                        GameObject cofre = raycast.collider.gameObject;
+
+                        if (!cofreDesenterrado && pala.activeInHierarchy)   //Desentierra el tesoro cuando el jugador tiene la pala en la mano y presiona la E
+                        {
+                            // Animar pala y cofre
+                            Animator animPala = pala.GetComponent<Animator>();
+                            animPala.SetBool("isSecondary", true);
+                            animPala.SetTrigger("AccionSecundaria");
+                            animPala.SetBool("bandera", false);
+                            animPala.Play("PalaExcavar");
+
+                            animatorCofre.Play("AbrirCofre");
+
+                            cofreDesenterrado = true;
+                        }
+                        else if (cofreDesenterrado && !cofreRecogido)
+                        {
+                            Cofre scriptCofre = cofre.GetComponent<Cofre>();
+                            scriptCofre.RecogerCofre(); // Entregar recompensa o similar
+
+                            cofreRecogido = true;
+
+                            objetoInteraccionE.SetActive(false); // Oculta el indicador de interacción
+                        }
                     }
                 }
+
             }
-
-        }
         
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out raycast, 2.5f))
         {

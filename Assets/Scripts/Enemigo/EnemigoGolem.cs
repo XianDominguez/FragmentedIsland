@@ -27,6 +27,16 @@ public class EnemigoGolem : MonoBehaviour
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
+    public AudioSource audioSourceGolem;
+    public AudioSource audioSourceSwingGolem;
+
+    public AudioClip Agro;
+    public AudioClip[] sonidosDeDano;
+    public AudioClip[] sonidosDeMuerte;
+    public AudioClip[] sonidosDeSwing;
+
+    private bool teSigue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +59,7 @@ public class EnemigoGolem : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 20)
         {
+            teSigue = false;
             cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
             {
@@ -110,6 +121,13 @@ public class EnemigoGolem : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.transform.position) > 2.8 && !atacando)
             {
+                if (!teSigue)
+                {
+                    audioSourceGolem.clip = Agro;
+                    audioSourceGolem.Play();
+                    teSigue = true;
+                }
+
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("walk", true);
@@ -183,13 +201,51 @@ public class EnemigoGolem : MonoBehaviour
     }
     IEnumerator ResetearInvulnerabilidad()
     {
+        if (vidaActual <= 0)
+        {
+            banderaMuerto = true;
+            MuerteAnim();
+        }
+        RecibirDano();
+
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
         puedeRecibirDano = true;
     }
     void MuerteAnim()
     {
+        if (sonidosDeMuerte.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeMuerte.Length);
+            audioSourceGolem.clip = sonidosDeMuerte[indice];
+            Debug.Log("Funciona");
+        }
+        audioSourceGolem.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceGolem.Play();
         ani.Play("MuerteGolem");
     }
+
+    public void RecibirDano()
+    {
+        if (sonidosDeDano.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeDano.Length);
+            audioSourceGolem.clip = sonidosDeDano[indice];
+        }
+        audioSourceGolem.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceGolem.Play();
+    }
+
+    public void AtaqueSonidoGolem()
+    {
+        if (sonidosDeSwing.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeSwing.Length);
+            audioSourceSwingGolem.clip = sonidosDeSwing[indice];
+        }
+        audioSourceSwingGolem.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSwingGolem.Play();
+    }
+
 
     public void MuerteDestroy()
     {

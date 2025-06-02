@@ -27,6 +27,17 @@ public class EnemigoEspiritu : MonoBehaviour
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
+    public AudioSource audioSourceEspiritu;
+    public AudioSource audioSourceSwingEspirtu;
+
+    public AudioClip Agro;
+    public AudioClip[] sonidosDeDano;
+    public AudioClip[] sonidosDeMuerte;
+    public AudioClip[] sonidosDeSwing;
+
+    private bool teSigue;
+
+
     private void Awake()
     {
         vidaActual = vidaMaxima;
@@ -53,6 +64,7 @@ public class EnemigoEspiritu : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 8)
         {
+            teSigue = false;
             ani.SetBool("run", false);
 
             cronometro += 1 * Time.deltaTime;
@@ -109,6 +121,12 @@ public class EnemigoEspiritu : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.transform.position) > 2 && !atacando)
             {
+                if (!teSigue)
+                {
+                    audioSourceEspiritu.clip = Agro;
+                    audioSourceEspiritu.Play();
+                    teSigue = true;
+                }
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("walk", false);
@@ -152,6 +170,7 @@ public class EnemigoEspiritu : MonoBehaviour
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 
+
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -186,12 +205,50 @@ public class EnemigoEspiritu : MonoBehaviour
 
     IEnumerator ResetearInvulnerabilidad()
     {
+        if (vidaActual <= 0)
+        {
+            banderaMuerto = true;
+            MuerteAnim();
+        }
+        PlayAudioRecibeEspirtu();
+
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
+
         puedeRecibirDano = true;
+    }
+
+    public void PlayAudioRecibeEspirtu()
+    {
+        if (sonidosDeDano.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeDano.Length);
+            audioSourceEspiritu.clip = sonidosDeDano[indice];
+        }
+        audioSourceEspiritu.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceEspiritu.Play();
     }
     void MuerteAnim()
     {
+        if (sonidosDeMuerte.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeMuerte.Length);
+            audioSourceEspiritu.clip = sonidosDeMuerte[indice];
+        }
+        audioSourceEspiritu.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceEspiritu.Play();
         ani.Play("Muelte");
+    }
+
+    public void AtaqueSonidoEspiritu    ()
+    {
+        Debug.Log("Sonido ataque");
+        if (sonidosDeSwing.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeSwing.Length);
+            audioSourceSwingEspirtu.clip = sonidosDeSwing[indice];
+        }
+        audioSourceSwingEspirtu.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSwingEspirtu.Play();
     }
 
     public void MuerteDestroy()

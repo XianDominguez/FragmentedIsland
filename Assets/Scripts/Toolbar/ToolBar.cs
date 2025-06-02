@@ -53,6 +53,14 @@ public class ToolBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            DesbloquearArma(0);
+            DesbloquearArma(1);
+            DesbloquearArma(2);
+            DesbloquearArma(3);
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1) && armasDesbloqueadas[0] && !espadaMano.activeInHierarchy)
         {
             Animator animActual = armaActual.GetComponent<Animator>();

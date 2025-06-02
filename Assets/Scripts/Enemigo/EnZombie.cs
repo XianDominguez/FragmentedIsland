@@ -29,6 +29,8 @@ public class EnZombie : MonoBehaviour
 
     public AudioSource audioSourceGolpeZombie;
 
+    public AudioClip[] sonidosDeGolpe;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,6 +157,8 @@ public class EnZombie : MonoBehaviour
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 
+            PlayAudioGolpeZombie();
+
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -189,12 +193,24 @@ public class EnZombie : MonoBehaviour
 
     IEnumerator ResetearInvulnerabilidad()
     {
+        if (vidaActual <= 0)
+        {
+            banderaMuerto = true;
+            MuerteAnim();
+        }
+
         yield return new WaitForSeconds(0.5f); // Tiempo de invulnerabilidad
+
         puedeRecibirDano = true;
     }
 
     public void PlayAudioGolpeZombie()
     {
+        if (sonidosDeGolpe.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeGolpe.Length);
+            audioSourceGolpeZombie.clip = sonidosDeGolpe[indice];
+        }
         audioSourceGolpeZombie.pitch = Random.Range(0.9f, 1.1f);
         audioSourceGolpeZombie.Play();
     }
