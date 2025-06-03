@@ -27,6 +27,9 @@ public class AbrirInventario : MonoBehaviour
     public Button craftearHacha;
     public Button craftearMadera;
 
+    public AudioSource audioPlayer;
+    public AudioClip audioClipMapa;
+
     bool inventarioAbierto;
     bool menuCrafteoAbierto;
     bool mapaAbierto;
@@ -130,6 +133,8 @@ public class AbrirInventario : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M ) && !menuCrafteoAbierto && !inventarioAbierto)
         {
             personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
+            audioPlayer.PlayOneShot(audioClipMapa);
 
             if (banderaMapa == false)
             {

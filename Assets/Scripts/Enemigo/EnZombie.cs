@@ -27,9 +27,15 @@ public class EnZombie : MonoBehaviour
     public bool banderaMuerto = false;
     private bool puedeRecibirDano = true;
 
-    public AudioSource audioSourceGolpeZombie;
+    public AudioSource audioSourceZombie;
+    public AudioSource audioSourceSwingZombie;
 
-    public AudioClip[] sonidosDeGolpe;
+    public AudioClip Agro;
+    public AudioClip[] sonidosDeDano;
+    public AudioClip[] sonidosDeMuerte;
+    public AudioClip[] sonidosDeSwing;
+    private bool teSigue;
+
 
     // Start is called before the first frame update
     void Start()
@@ -114,6 +120,13 @@ public class EnZombie : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.transform.position) > 2.4 && !atacando)
             {
+                if (!teSigue)
+                {
+                    audioSourceZombie.clip = Agro;
+                    audioSourceZombie.Play();
+                    teSigue = true;
+                }
+
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
 
                 ani.SetBool("walk", true);
@@ -151,6 +164,8 @@ public class EnZombie : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PersonajeAnimaciones personajeAnimaciones = other.GetComponentInParent<PersonajeAnimaciones>();
+
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             vidaActual -= 10;
@@ -158,7 +173,7 @@ public class EnZombie : MonoBehaviour
             puedeRecibirDano = false;
 
             PlayAudioGolpeZombie();
-
+            personajeAnimaciones.DanoEspada();
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -167,6 +182,7 @@ public class EnZombie : MonoBehaviour
             vidaActual -= 3;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPico();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -176,6 +192,7 @@ public class EnZombie : MonoBehaviour
             vidaActual -= 2;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPala();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -185,6 +202,7 @@ public class EnZombie : MonoBehaviour
             vidaActual -= 5;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoHacha();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -206,18 +224,37 @@ public class EnZombie : MonoBehaviour
 
     public void PlayAudioGolpeZombie()
     {
-        if (sonidosDeGolpe.Length > 0)
+        if (sonidosDeDano.Length > 0)
         {
-            int indice = Random.Range(0, sonidosDeGolpe.Length);
-            audioSourceGolpeZombie.clip = sonidosDeGolpe[indice];
+            int indice = Random.Range(0, sonidosDeDano.Length);
+            audioSourceZombie.clip = sonidosDeDano[indice];
         }
-        audioSourceGolpeZombie.pitch = Random.Range(0.9f, 1.1f);
-        audioSourceGolpeZombie.Play();
+        audioSourceZombie.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceZombie.Play();
     }
 
     void MuerteAnim()
     {
+        if (sonidosDeMuerte.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeMuerte.Length);
+            audioSourceZombie.clip = sonidosDeMuerte[indice];
+        }
+        audioSourceZombie.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceZombie.Play();
         ani.Play("MuerteZombie");
+    }
+
+    public void AtaqueSonidoZombie()
+    {
+        Debug.Log("Sonido ataque");
+        if (sonidosDeSwing.Length > 0)
+        {
+            int indice = Random.Range(0, sonidosDeSwing.Length);
+            audioSourceSwingZombie.clip = sonidosDeSwing[indice];
+        }
+        audioSourceSwingZombie.pitch = Random.Range(0.9f, 1.1f);
+        audioSourceSwingZombie.Play();
     }
 
     public void MuerteDestroy()

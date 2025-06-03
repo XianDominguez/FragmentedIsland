@@ -164,13 +164,15 @@ public class EnemigoEspiritu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PersonajeAnimaciones personajeAnimaciones = other.GetComponentInParent<PersonajeAnimaciones>();
+
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             vidaActual -= 10;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 
-
+            personajeAnimaciones.DanoEspada();
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -179,6 +181,7 @@ public class EnemigoEspiritu : MonoBehaviour
             vidaActual -= 3;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPico();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -188,6 +191,7 @@ public class EnemigoEspiritu : MonoBehaviour
             vidaActual -= 2;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPala();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -197,6 +201,7 @@ public class EnemigoEspiritu : MonoBehaviour
             vidaActual -= 5;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoHacha();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -239,7 +244,7 @@ public class EnemigoEspiritu : MonoBehaviour
         ani.Play("Muelte");
     }
 
-    public void AtaqueSonidoEspiritu    ()
+    public void AtaqueSonidoEspiritu()
     {
         Debug.Log("Sonido ataque");
         if (sonidosDeSwing.Length > 0)

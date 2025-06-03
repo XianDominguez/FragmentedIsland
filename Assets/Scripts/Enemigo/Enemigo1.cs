@@ -185,6 +185,9 @@ public class Enemigo1 : MonoBehaviour
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
 
+            personajeAnimaciones.DanoPico();
+
+
             StartCoroutine(ResetearInvulnerabilidad());
         }
 

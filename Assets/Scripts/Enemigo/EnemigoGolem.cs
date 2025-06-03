@@ -163,12 +163,14 @@ public class EnemigoGolem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PersonajeAnimaciones personajeAnimaciones = other.GetComponentInParent<PersonajeAnimaciones>();
+
         if (other.CompareTag("Espada") && puedeRecibirDano)
         {
             vidaActual -= 5;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
-
+            personajeAnimaciones.DanoEspada();
             StartCoroutine(ResetearInvulnerabilidad());
         }
 
@@ -177,6 +179,7 @@ public class EnemigoGolem : MonoBehaviour
             vidaActual -= 9;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPico();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -186,6 +189,7 @@ public class EnemigoGolem : MonoBehaviour
             vidaActual -= 3;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoPala();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
@@ -195,6 +199,7 @@ public class EnemigoGolem : MonoBehaviour
             vidaActual -= 4;
             barraVida.value = vidaActual;
             puedeRecibirDano = false;
+            personajeAnimaciones.DanoHacha();
 
             StartCoroutine(ResetearInvulnerabilidad());
         }
