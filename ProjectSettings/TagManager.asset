@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - arma
   - Espada
   - Esqueleto
   - Material
@@ -24,6 +23,10 @@ TagManager:
   - Ahoy
   - Marinero
   - EspadaRecoger
+  - EspadaEsqueleto
+  - PunoGolem
+  - PunoEspiritu
+  - ManoZombie
   layers:
   - Default
   - TransparentFX

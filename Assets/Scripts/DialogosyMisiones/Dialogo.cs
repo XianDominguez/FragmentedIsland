@@ -4,6 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class SonidosNpc
+{
+    public string nombreNpc; // debe coincidir con el tag (ej: "viejo", "herrero", etc.)
+    public List<AudioClip> clips;
+}
+
 public class Dialogo : MonoBehaviour
 {
     [Header("Referencias")]
@@ -29,7 +36,29 @@ public class Dialogo : MonoBehaviour
 
     private float velocidadEscritura = 0.025f;
 
+    public AudioSource audioSource;
 
+    public AudioSource sourceGolpeHerrero;
+    public AudioClip golepHerrero;
+
+    [SerializeField] private List<SonidosNpc> sonidosPorNpc;
+    private Dictionary<string, List<AudioClip>> diccionarioSonidos;
+    private string npcActualTag;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        diccionarioSonidos = new Dictionary<string, List<AudioClip>>();
+
+        foreach (var entrada in sonidosPorNpc)
+        {
+            diccionarioSonidos[entrada.nombreNpc] = entrada.clips;
+        }
+    }
 
     private void Update()
     {
@@ -37,7 +66,7 @@ public class Dialogo : MonoBehaviour
         {
             DeterminarNpc();
 
-            if (escribiendoTexto) return; // Evita interacción mientras se escribe
+            if (escribiendoTexto) return; // Evita interacciï¿½n mientras se escribe
 
             
             EtapaDialogo etapaActual = etapasDialogo[indexEtapa];
@@ -96,11 +125,11 @@ public class Dialogo : MonoBehaviour
         {
             EtapaDialogo etapaActual = etapasDialogo[indexEtapa];
 
-            // Verificar si necesita misión
+            // Verificar si necesita misiï¿½n
             if (etapaActual.requiereMision && !ControlMisiones.Instance.EstaMisionCompletada(etapaActual.idMision))
             {
                 TerminarDialogo();
-                indexLinea--; // Para que se repita la línea si se reinicia el diálogo
+                indexLinea--; // Para que se repita la lï¿½nea si se reinicia el diï¿½logo
                 return;
             }
 
@@ -120,15 +149,21 @@ public class Dialogo : MonoBehaviour
             return;
         }
 
-        // Si aún hay líneas en la misma etapa
+        // Si aï¿½n hay lï¿½neas en la misma etapa
         StartCoroutine(MostrarTexto());
     }
-    
+
 
     IEnumerator MostrarTexto()
     {
         escribiendoTexto = true;
         textoDialogo.text = "";
+
+        if (diccionarioSonidos.TryGetValue(npcActualTag, out List<AudioClip> sonidos) && sonidos.Count > 0)
+        {
+            AudioClip clipAleatorio = sonidos[Random.Range(0, sonidos.Count)];
+            audioSource.PlayOneShot(clipAleatorio);
+        }
 
         foreach (char ch in etapasDialogo[indexEtapa].lineas[indexLinea])
         {
@@ -138,6 +173,7 @@ public class Dialogo : MonoBehaviour
 
         escribiendoTexto = false;
     }
+
 
     void TerminarDialogo()
     {
@@ -158,10 +194,10 @@ public class Dialogo : MonoBehaviour
 
         if (ControlMisiones.Instance.EstaMisionCompletada("forjar_lingote"))
         {
-            // 1. Eliminar el ítem del inventario
+            // 1. Eliminar el ï¿½tem del inventario
             SistemaDeInventario.Instance.RemoveCantidad(metal, 1);
 
-            // 2. Destruir el obstáculo del juego
+            // 2. Destruir el obstï¿½culo del juego
             if (objetoADestruir != null)
             {
                 Destroy(objetoADestruir);
@@ -208,28 +244,32 @@ public class Dialogo : MonoBehaviour
 
     void DeterminarNpc()
     {
-        if(gameObject.CompareTag("viejo"))
+        Image imagenTexto = panelDialogo.GetComponent<Image>();
+
+        if (gameObject.CompareTag("viejo"))
         {
-            Image imagenTexto = panelDialogo.GetComponent<Image>();
             imagenTexto.sprite = spritesDialogo[0];
+            npcActualTag = "viejo";
         }
-
-        if (gameObject.CompareTag("herrero"))
+        else if (gameObject.CompareTag("herrero"))
         {
-            Image imagenTexto = panelDialogo.GetComponent<Image>();
             imagenTexto.sprite = spritesDialogo[1];
+            npcActualTag = "herrero";
         }
-
-        if (gameObject.CompareTag("Ahoy"))
+        else if (gameObject.CompareTag("Ahoy"))
         {
-            Image imagenTexto = panelDialogo.GetComponent<Image>();
             imagenTexto.sprite = spritesDialogo[2];
+            npcActualTag = "Ahoy";
         }
-
-        if (gameObject.CompareTag("Marinero"))
+        else if (gameObject.CompareTag("Marinero"))
         {
-            Image imagenTexto = panelDialogo.GetComponent<Image>();
             imagenTexto.sprite = spritesDialogo[3];
+            npcActualTag = "Marinero";
         }
+    }
+
+    public void AudioGolpe()
+    {
+        sourceGolpeHerrero.PlayOneShot(golepHerrero);
     }
 }

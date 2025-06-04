@@ -8,6 +8,13 @@ public class Horno : MonoBehaviour
     public RecetasCrafteo receta;
     public SistemaDeInventario sistemaDeInventario;
 
+    public AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+    }
     public bool ComprobarPosibilidades(RecetasCrafteo receta, List<InventoryItem> inventoryItems)
     {
         // 1. Verificar si el jugador tiene todos los ítems necesarios
@@ -42,6 +49,7 @@ public class Horno : MonoBehaviour
 
     public void CraftearMetal(RecetasCrafteo receta)
     {
+        audioSource.Play();
 
         // Restar los ítems del inventario
         foreach (var requerido in receta.requiredItems)

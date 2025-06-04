@@ -51,6 +51,12 @@ public class Personaje : MonoBehaviour
 
     private Coroutine flashCoroutine;
 
+    public AudioClip audioMuerte;
+    public AudioClip[] hitEsqueleto;
+    public AudioClip[] hitZombie;
+    public AudioClip[] hitEspiritu;
+    public AudioClip[] hitGolem;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,9 +172,8 @@ public class Personaje : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("arma"))
+        if (other.CompareTag("EspadaEsqueleto"))
         {
-            Debug.Log("Dano");
             vida -= 0.1f;
             barraVida.fillAmount = vida;
             if (flashCoroutine != null)
@@ -176,17 +181,88 @@ public class Personaje : MonoBehaviour
 
             flashCoroutine = StartCoroutine(FlashDamageScreen());
 
-            if (vida <= 0f)
+            if (hitEsqueleto.Length > 0)
             {
-                personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
-
-                vida = 0f;
-                barraVida.fillAmount = 0f;
-                StartCoroutine(MorirConFade());
-
+                int indice = Random.Range(0, hitEsqueleto.Length);
+                audioSource.clip = hitEsqueleto[indice];
             }
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+
+            ComprobarVida();
+        }
+        if (other.CompareTag("PunoGolem"))
+        {
+            vida -= 0.05f;
+            barraVida.fillAmount = vida;
+            if (flashCoroutine != null)
+                StopCoroutine(flashCoroutine);
+
+            flashCoroutine = StartCoroutine(FlashDamageScreen());
+
+            if (hitGolem.Length > 0)
+            {
+                int indice = Random.Range(0, hitGolem.Length);
+                audioSource.clip = hitGolem[indice];
+            }
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+
+            ComprobarVida();
+        }
+        if (other.CompareTag("PunoEspiritu"))
+        {
+            vida -= 0.2f;
+            barraVida.fillAmount = vida;
+            if (flashCoroutine != null)
+                StopCoroutine(flashCoroutine);
+
+            flashCoroutine = StartCoroutine(FlashDamageScreen());
+
+            if (hitEspiritu.Length > 0)
+            {
+                int indice = Random.Range(0, hitEspiritu.Length);
+                audioSource.clip = hitEspiritu[indice];
+            }
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+
+            ComprobarVida();
+        }
+        if (other.CompareTag("ManoZombie"))
+        {
+            vida -= 0.3f;
+            barraVida.fillAmount = vida;
+            if (flashCoroutine != null)
+                StopCoroutine(flashCoroutine);
+
+            flashCoroutine = StartCoroutine(FlashDamageScreen());
+
+            if (hitZombie.Length > 0)
+            {
+                int indice = Random.Range(0, hitZombie.Length);
+                audioSource.clip = hitZombie[indice];
+            }
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+
+            ComprobarVida();
         }
     }
+
+    void ComprobarVida()
+    {
+        if (vida <= 0f)
+        {
+            personajeAnimaciones = GetComponentInChildren<PersonajeAnimaciones>();
+
+            vida = 0f;
+            barraVida.fillAmount = 0f;
+            StartCoroutine(MorirConFade());
+
+        }
+    }
+
 
     private IEnumerator Fade(float from, float to, float duration)
     {

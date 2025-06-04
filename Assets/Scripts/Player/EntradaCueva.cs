@@ -28,13 +28,14 @@ public class EntradaCueva : MonoBehaviour
 
     private IEnumerator EntrarACueva()
     {
+        if (sonidoEntrada != null)
+            sonidoEntrada.Play();
+
         // Fade In
         yield return StartCoroutine(Fade(0, 1, fadeDuration));
 
         // Sonido
-        if (sonidoEntrada != null)
-            sonidoEntrada.Play();
-
+       
         // Teleportar jugador
         jugador.transform.position = puntoDestino.position;
 
