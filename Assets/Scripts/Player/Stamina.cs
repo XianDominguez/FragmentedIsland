@@ -13,7 +13,7 @@ public class Stamina : MonoBehaviour
     [Header("Opciones")]
     [SerializeField] private bool hideWhenFull = true;
 
-    private void Update()
+    private void Update() //Controla la barra de stamina cuando el jugador corre
     {
         if (playerController == null || staminaFillBar == null) return;
 

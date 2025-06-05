@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class Pico : MonoBehaviour
 {
+    [Header("Metal")]
+    [Space]
     public int menaMetalRecogida;
-    public int piedraRecogida;
-
     private int menasDeMetal;
-
     public SumarMaterial sumarMaterial;
-
+    [Header("Sonido")]
+    [Space]
     public AudioSource audioMenas;
-
+    [Space]
     public AudioClip romperMena;
     public AudioClip picarMena;
 
@@ -22,41 +22,17 @@ public class Pico : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("PiedraPicable"))
+        if (other.gameObject.CompareTag("MenaMetal"))   //Detectra que pica metal
         {
-            if(piedraRecogida < Random.Range(2,5))
-            {
-                ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
-
-                itemObject.CogerMultiplesObjetos();
-
-                sumarMaterial.AnimacionSumar(other);
-
-
-                piedraRecogida++;
-            }
-            else
-            {
-                ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
-                itemObject.CogerObjeto();
-                sumarMaterial.AnimacionSumar(other);
-
-
-            }
-
-        }
-
-        if (other.gameObject.CompareTag("MenaMetal"))
-        {
-            if (menaMetalRecogida < 2)
+            if (menaMetalRecogida < 2)  //Suma la variable para que el jugador tenga que dar 3 golpes
             {
                 audioMenas.PlayOneShot(picarMena);
 
                 menaMetalRecogida++;
             }
-            else
+            else //Rompe la mena y suma el material
             {
-                audioMenas.PlayOneShot(romperMena);
+                audioMenas.PlayOneShot(romperMena); 
 
                 ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
                 itemObject.CogerObjeto();

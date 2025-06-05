@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Hacha : MonoBehaviour
 {
+    [Header("Madera")]
+    [Space]
     public SumarMaterial sumarMaterial;
-
     public int golpesArbol;
     private Animator animatorArbol;
-
+    [Header("Objetos")]
+    [Space]
     GameObject arbolCae;
     GameObject toconArbol;
-
+    [Header("Audio")]
+    [Space]
     public AudioSource arbolCaeAudioSource;
-
+    [Space]
     public AudioClip arbolCayendo;
     public AudioClip talar1;
     public AudioClip talar2;
@@ -22,9 +25,9 @@ public class Hacha : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("ArbolPuente"))
+        if (other.gameObject.CompareTag("ArbolPuente")) //Detecta a que arbol le da el jugador
         {
-            if (golpesArbol < 2)
+            if (golpesArbol < 2)    //Suma los golpes
             {
                 golpesArbol++;
                 if(golpesArbol > 1)
@@ -37,7 +40,7 @@ public class Hacha : MonoBehaviour
 
                 }
             }
-            else
+            else //Al 3er golpe el arbol cae y el jugador obtiene madera
             {
 
                 Transform arbolCaeTransform = other.transform.parent.Find("ArbolCortadoPuente");
@@ -79,7 +82,7 @@ public class Hacha : MonoBehaviour
 
                 }
             }
-            else
+            else //Al 3er golpe el arbol se corta y el jugador obtiene madera
             {
                 ItemObject itemObject = other.gameObject.GetComponent<ItemObject>();
                 itemObject.CogerObjeto();

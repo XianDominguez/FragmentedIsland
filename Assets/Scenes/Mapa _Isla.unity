@@ -90780,20 +90780,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vida: 0
   barraVida: {fileID: 1134307210}
-  audioSource: {fileID: 1222710468}
   firstPersonController: {fileID: 4366953017109893370}
   sumarMaterial: {fileID: 2094360578}
-  pantallaGameOver: {fileID: 2093988415}
-  objetoInteraccionE: {fileID: 763629578}
-  animatorCofre: {fileID: 374896847}
   controlCamara: {fileID: 4366953017109893370}
   controlMovimiento: {fileID: 4366953017109893370}
   personajeAnimaciones: {fileID: 0}
+  pantallaGameOver: {fileID: 2093988415}
+  objetoInteraccionE: {fileID: 763629578}
+  animatorCofre: {fileID: 374896847}
   fadeCanvas: {fileID: 1092535001}
   fadeDuration: 1
   fadeDead: 0.5
   damageScreen: {fileID: 2036160629}
   damageFlashDuration: 0.3
+  audioSource: {fileID: 1222710468}
   audioMuerte: {fileID: 8300000, guid: de1df86325f26994498a5b79cc832289, type: 3}
   hitEsqueleto:
   - {fileID: 8300000, guid: 897ef1ff4f0277c47a28b26387ba7f1e, type: 3}

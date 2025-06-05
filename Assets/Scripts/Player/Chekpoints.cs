@@ -35,31 +35,24 @@ namespace SmartPoint
             }
         }
 
-        private void HandleDeath(GameObject entity)
+        private void HandleDeath(GameObject entity) //Evento que teleporta al jugador cuando reaparece al chekpoint anterior
         {
-            Debug.Log("HandleDeath recibido para: " + entity.name);
-            Debug.Log("Se activa handle");
 
             if (resetVelocity)
             {
                 if (entity.TryGetComponent<FirstPersonController>(out var cc))
                 {
-                    Debug.Log("Se activa handle 1");
                     cc.enabled = false;
                     TeleportEntity(entity);
                     cc.enabled = true;
                 }
                 else if (entity.TryGetComponent<Rigidbody>(out var rb))
                 {
-                    Debug.Log("Se activa handle 2");
-
                     rb.velocity = rb.angularVelocity = Vector3.zero;
                     TeleportEntity(entity);
                 }
                 else
                 {
-                    Debug.Log("Se activa handle 3");
-
                     TeleportEntity(entity);
                 }
             }
@@ -74,7 +67,7 @@ namespace SmartPoint
             }
         }
 
-        private void TeleportEntity(GameObject go)
+        private void TeleportEntity(GameObject go)  //Funcion de teleport
         {
             Debug.Log("Se activa tp");
 

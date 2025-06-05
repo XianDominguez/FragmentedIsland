@@ -7,7 +7,7 @@ public class SeguimientoCabeza : MonoBehaviour
     public float lookDistance = 5f; // distancia para que te mire
     public float rotationSpeed = 5f;
 
-    void Update()
+    void Update()   //Hace que el npc te siga con la cabeza cuando estas cerca de el
     {
         if (headBone == null || player == null)
             return;

@@ -10,16 +10,14 @@ public class EntradaCueva : MonoBehaviour
     public float fadeDuration = 1f;
     public KeyCode teclaInteractuar = KeyCode.E;
 
-    public GameObject feedInteract;
+    public GameObject feedInteract; //Boton de E para interactuar
 
-    private bool enZona = false;
+    private bool enZona = false;    
     private GameObject jugador;
-
-
 
     void Update()
     {
-        if (enZona && Input.GetKeyDown(teclaInteractuar))
+        if (enZona && Input.GetKeyDown(teclaInteractuar))   //Accion de entrar a la cueva o casa
         {
             StartCoroutine(EntrarACueva());
         }
@@ -33,8 +31,6 @@ public class EntradaCueva : MonoBehaviour
 
         // Fade In
         yield return StartCoroutine(Fade(0, 1, fadeDuration));
-
-        // Sonido
        
         // Teleportar jugador
         jugador.transform.position = puntoDestino.position;
@@ -46,7 +42,7 @@ public class EntradaCueva : MonoBehaviour
         yield return StartCoroutine(Fade(1, 0, fadeDuration));
     }
 
-    private IEnumerator Fade(float from, float to, float duration)
+    private IEnumerator Fade(float from, float to, float duration)  //Fade de imagen a negro
     {
         float elapsed = 0f;
         while (elapsed < duration)
@@ -60,7 +56,7 @@ public class EntradaCueva : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //Detecator de que el jugador entra en la zona
         {
             enZona = true;
             jugador = other.gameObject;
@@ -71,7 +67,7 @@ public class EntradaCueva : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))     //Detecator de que el jugador sale de la zona
         {
             enZona = false;
             jugador = null;

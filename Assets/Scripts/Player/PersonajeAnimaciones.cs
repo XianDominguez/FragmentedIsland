@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class PersonajeAnimaciones : MonoBehaviour
 {
+    [Header("Animaciones")]
+    [Space]
     public Animator animator;
-
     private bool alternarAtaque = false;
-
     public float cooldownAtaque = 1.0f;
     private float lastAttackTime = -Mathf.Infinity;
-
     public bool animacionEjecutandose;
-
+    [Header("Audio")]
+    [Space]
     public AudioSource audioSourceSonidoArma;
     public AudioSource audioSourceHit;
-    [Header("Espada")]
+    [Header("Audio Espada")]
     [Space]
     public AudioClip espada1;
     public AudioClip espada2;
     public AudioClip[] espadaDano;
 
-    [Header("Hacha")]
+    [Header("Audio Hacha")]
     [Space]
     public AudioClip[] hachaSwing;
     public AudioClip[] hachaDano;
 
-    [Header("Pala")]
+    [Header("Audio Pala")]
     [Space]
     public AudioClip[] palaSwing;
     public AudioClip[] palaDano;
     public AudioClip desenterrar;
-    [Header("Pico")]
+    [Header("Audio Pico")]
     [Space]
 
     public AudioClip[] picoSwing;
@@ -82,17 +82,7 @@ public class PersonajeAnimaciones : MonoBehaviour
             alternarAtaque = !alternarAtaque;
 
             lastAttackTime = Time.time;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time >= lastAttackTime + cooldownAtaque)
-        {
-            animator.SetBool("isSecondary", true);
-            animator.SetTrigger("AccionSecundaria");
-            animator.SetBool("bandera", false);
-            lastAttackTime = Time.time;
-        }
-
-        
+        }    
     }
 
     public void EstadoAnimaciones()

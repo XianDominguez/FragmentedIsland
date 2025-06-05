@@ -7844,6 +7844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receta: {fileID: 11400000, guid: b9939ec990b55db49a1bbaba2ef9572f, type: 2}
   sistemaDeInventario: {fileID: 1822286575}
+  audioSource: {fileID: 0}
 --- !u!65 &1034449567
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20688,7 +20689,18 @@ MonoBehaviour:
   animator: {fileID: 2061582890}
   cooldownAtaque: 1.2
   animacionEjecutandose: 0
-  audioSourceSonidoEspada: {fileID: 2061582892}
+  audioSourceSonidoArma: {fileID: 0}
+  audioSourceHit: {fileID: 0}
+  espada1: {fileID: 0}
+  espada2: {fileID: 0}
+  espadaDano: []
+  hachaSwing: []
+  hachaDano: []
+  palaSwing: []
+  palaDano: []
+  desenterrar: {fileID: 0}
+  picoSwing: []
+  picoDano: []
 --- !u!82 &2061582892
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22558,7 +22570,18 @@ MonoBehaviour:
   animator: {fileID: 747183043589212021}
   cooldownAtaque: 1.55
   animacionEjecutandose: 0
-  audioSourceSonidoEspada: {fileID: 0}
+  audioSourceSonidoArma: {fileID: 0}
+  audioSourceHit: {fileID: 0}
+  espada1: {fileID: 0}
+  espada2: {fileID: 0}
+  espadaDano: []
+  hachaSwing: []
+  hachaDano: []
+  palaSwing: []
+  palaDano: []
+  desenterrar: {fileID: 0}
+  picoSwing: []
+  picoDano: []
 --- !u!1 &767097056461556646
 GameObject:
   m_ObjectHideFlags: 0
@@ -25317,7 +25340,18 @@ MonoBehaviour:
   animator: {fileID: 2106083418270864479}
   cooldownAtaque: 1.6
   animacionEjecutandose: 0
-  audioSourceSonidoEspada: {fileID: 0}
+  audioSourceSonidoArma: {fileID: 0}
+  audioSourceHit: {fileID: 0}
+  espada1: {fileID: 0}
+  espada2: {fileID: 0}
+  espadaDano: []
+  hachaSwing: []
+  hachaDano: []
+  palaSwing: []
+  palaDano: []
+  desenterrar: {fileID: 0}
+  picoSwing: []
+  picoDano: []
 --- !u!1001 &2118414189842914167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30411,11 +30445,11 @@ GameObject:
   - component: {fileID: 4366953017109893373}
   - component: {fileID: 4366953017109893374}
   - component: {fileID: 4366953017109893371}
+  - component: {fileID: 4366953017109893378}
+  - component: {fileID: 4366953017109893380}
   - component: {fileID: 4366953017109893370}
   - component: {fileID: 4366953017109893377}
-  - component: {fileID: 4366953017109893378}
   - component: {fileID: 4366953017109893379}
-  - component: {fileID: 4366953017109893380}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -30591,8 +30625,10 @@ MonoBehaviour:
   personajeAnimaciones: {fileID: 0}
   inventario: {fileID: 8710148129029455791}
   UiCrafteo: {fileID: 807814725}
+  mapa: {fileID: 0}
   banderaaInventario: 0
   banderaCrafteo: 0
+  banderaMapa: 0
   craftingSystem: {fileID: 807814727}
   recetaMadera: {fileID: 11400000, guid: b41eab22f0559d44c90bf338d3aa7fb6, type: 2}
   recetaHacha: {fileID: 11400000, guid: 366e6b30cee870b4998360133ae991a6, type: 2}
@@ -30601,6 +30637,8 @@ MonoBehaviour:
   craftearPico: {fileID: 1858470405}
   craftearHacha: {fileID: 89698537}
   craftearMadera: {fileID: 1750477595}
+  audioPlayer: {fileID: 0}
+  audioClipMapa: {fileID: 0}
 --- !u!81 &4366953017109893378
 AudioListener:
   m_ObjectHideFlags: 0
@@ -30623,20 +30661,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vida: 0
   barraVida: {fileID: 1768886870}
-  audioSource: {fileID: 0}
   firstPersonController: {fileID: 4366953017109893370}
   sumarMaterial: {fileID: 749008997}
-  checkPoint:
-    cpc: {fileID: 0}
-    isActive: 0
-    position: {x: 0, y: 0, z: 0}
-    bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-    direction: 0
+  controlCamara: {fileID: 4366953017109893370}
+  controlMovimiento: {fileID: 4366953017109893370}
+  personajeAnimaciones: {fileID: 0}
   pantallaGameOver: {fileID: 295414820}
   objetoInteraccionE: {fileID: 842153421}
   animatorCofre: {fileID: 936726434732452773}
+  fadeCanvas: {fileID: 0}
+  fadeDuration: 3
+  fadeDead: 0.2
+  damageScreen: {fileID: 0}
+  damageFlashDuration: 0.3
+  audioSource: {fileID: 0}
+  audioMuerte: {fileID: 0}
+  hitEsqueleto: []
+  hitZombie: []
+  hitEspiritu: []
+  hitGolem: []
 --- !u!65 &4366953017109893380
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32234,6 +32277,9 @@ MonoBehaviour:
   menaMetalRecogida: 0
   piedraRecogida: 0
   sumarMaterial: {fileID: 749008997}
+  audioMenas: {fileID: 0}
+  romperMena: {fileID: 0}
+  picarMena: {fileID: 0}
 --- !u!4 &5275899752146093249
 Transform:
   m_ObjectHideFlags: 0
@@ -36050,6 +36096,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sumarMaterial: {fileID: 0}
   golpesArbol: 0
+  arbolCaeAudioSource: {fileID: 0}
+  arbolCayendo: {fileID: 0}
+  talar1: {fileID: 0}
+  talar2: {fileID: 0}
+  troncoTalado: {fileID: 0}
 --- !u!1 &6995973545064520340
 GameObject:
   m_ObjectHideFlags: 0
@@ -37830,6 +37881,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7913180991506253425
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 120.85984
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.136611
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.560799
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494118886065328422, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552213322305152680, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
+      propertyPath: m_Name
+      value: PedestalBien
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a90b1e376f566341bf2f496f28e058c, type: 3}
 --- !u!4 &7932750522278540740
 Transform:
   m_ObjectHideFlags: 0
@@ -40326,7 +40434,18 @@ MonoBehaviour:
   animator: {fileID: 9124125649194322979}
   cooldownAtaque: 1.5
   animacionEjecutandose: 0
-  audioSourceSonidoEspada: {fileID: 0}
+  audioSourceSonidoArma: {fileID: 0}
+  audioSourceHit: {fileID: 0}
+  espada1: {fileID: 0}
+  espada2: {fileID: 0}
+  espadaDano: []
+  hachaSwing: []
+  hachaDano: []
+  palaSwing: []
+  palaDano: []
+  desenterrar: {fileID: 0}
+  picoSwing: []
+  picoDano: []
 --- !u!137 &9127845431018089993
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -40661,3 +40780,4 @@ SceneRoots:
   - {fileID: 1251630662}
   - {fileID: 8748976037738227736}
   - {fileID: 2095116111166220917}
+  - {fileID: 7913180991506253425}
