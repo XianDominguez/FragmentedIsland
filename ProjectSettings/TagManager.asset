@@ -27,6 +27,8 @@ TagManager:
   - PunoGolem
   - PunoEspiritu
   - ManoZombie
+  - arma
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -38,7 +40,7 @@ TagManager:
   - Weapon
   - Post Processing
   - PostProcesadoCanvas
-  - 
+  - PostProcesadoCueva
   - 
   - 
   - 
